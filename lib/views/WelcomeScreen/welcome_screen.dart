@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
 
 import 'package:e_commerce/utils/colors.dart';
+import 'package:e_commerce/views/Authentication/RegisterScreen/register_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../Authentication/LoginScreen/login_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -45,23 +48,28 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               Row(
                 children: [
                   Expanded(
-                    child: Container(
-                      height: 60,
-                      decoration: BoxDecoration(
-                          color: AppColor.primaryColor,
-                          boxShadow: [
-                            BoxShadow(
-                                color: AppColor.primaryColor.withOpacity(0.3),
-                                blurRadius: 3)
-                          ],
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Center(
-                        child: Text(
-                          "Login",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                    child: InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (_)=>LoginScreen()));
+                      },
+                      child: Container(
+                        height: 60,
+                        decoration: BoxDecoration(
+                            color: AppColor.primaryColor,
+                            boxShadow: [
+                              BoxShadow(
+                                  color: AppColor.primaryColor.withOpacity(0.3),
+                                  blurRadius: 3)
+                            ],
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Center(
+                          child: Text(
+                            "Login",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
@@ -71,17 +79,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     width: 10,
                   ),
                   Expanded(
-                    child: Container(
-                      height: 60,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Center(
-                        child: Text(
-                          "Register",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
+                    child:InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (_)=>RegisterScreen()));
+                      },
+                      child: Container(
+                        height: 60,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Center(
+                          child: Text(
+                            "Register",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
                           ),
                         ),
                       ),
