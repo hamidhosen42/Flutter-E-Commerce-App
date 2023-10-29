@@ -4,6 +4,8 @@ import 'package:e_commerce/utils/colors.dart';
 import 'package:e_commerce/views/HomeScreen/home_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../CartScreen/cart_screen.dart';
+
 class BottomBarScreen extends StatefulWidget {
   const BottomBarScreen({super.key});
 
@@ -16,7 +18,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
   List<Widget> screen = [
     HomeScreen(),
     HomeScreen(),
-    HomeScreen(),
+    CartScreen(),
     HomeScreen(),
   ];
   @override

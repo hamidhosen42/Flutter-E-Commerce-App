@@ -1,4 +1,3 @@
-import 'package:e_commerce/views/BottomBavBarView/bottom_view.dart';
 import 'package:flutter/material.dart';
 
 import 'views/SplashScreen/splash_screen.dart';
@@ -19,7 +18,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true
       ),
-      home:const BottomBarScreen(),
+      home:const SplashScreen(),
     );
   }
 }

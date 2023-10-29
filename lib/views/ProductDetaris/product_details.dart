@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:e_commerce/utils/colors.dart';
 import 'package:e_commerce/widget/custom_appbar.dart';
 import 'package:e_commerce/widget/custom_button.dart';
 import 'package:flutter/material.dart';
@@ -14,9 +15,10 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  List<String> productVariant = ['20', '34', '45', '50', '60', '55'];
+  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-    List<String> productVariant = ['20', '34', '45', '50', '60', '55'];
     final size = MediaQuery.sizeOf(context);
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -135,17 +137,34 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   itemCount: 6,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    return Container(
-                      margin: EdgeInsets.only(right: 10),
-                      width: 45,
-                      decoration: BoxDecoration(
-                          border:
-                              Border.all(color: Color(0xFFD8D3D3), width: 1.5),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Center(
-                        child: Text(
-                          productVariant[index],
-                          style: TextStyle(fontWeight: FontWeight.w600),
+                    return InkWell(
+                      onTap: () {
+                        setState(() {
+                          selectedIndex = index;
+                        });
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(right: 10),
+                        width: 45,
+                        decoration: BoxDecoration(
+                            color: selectedIndex == index
+                                ? AppColor.primaryColor
+                                : null,
+                            border: Border.all(
+                                color: selectedIndex == index
+                                    ? Colors.transparent
+                                    : Color(0xFFD8D3D3),
+                                width: 1.5),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Center(
+                          child: Text(
+                            productVariant[index],
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: selectedIndex == index
+                                    ? Colors.white
+                                    : Colors.black),
+                          ),
                         ),
                       ),
                     );
