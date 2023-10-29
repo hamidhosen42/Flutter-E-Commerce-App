@@ -5,6 +5,8 @@ import 'package:e_commerce/utils/colors.dart';
 import 'package:e_commerce/widget/custom_appbar.dart';
 import 'package:flutter/material.dart';
 
+import '../ProductDetaris/product_details.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -36,27 +38,15 @@ class _HomeScreenState extends State<HomeScreen> {
     },
   ];
 
-    List<Map<String, String>> products = [
-    {
-      'image': "assets/images/r1.png",
-      'name':'Redmi Note 4',
-      'price':'40'
-    },
+  List<Map<String, String>> products = [
+    {'image': "assets/images/r1.png", 'name': 'Redmi Note 4', 'price': '40'},
     {
       'image': "assets/images/r2.png",
-      'name':'Apple Watch - series 6',
-      'price':'60'
+      'name': 'Apple Watch - series 6',
+      'price': '60'
     },
-    {
-      'image': "assets/images/r3.png",
-      'name':'Redmi Note 4',
-      'price':'40'
-    },
-    {
-      'image': "assets/images/r4.png",
-      'name':'Redmi Note 4',
-      'price':'40'
-    },
+    {'image': "assets/images/r3.png", 'name': 'Redmi Note 4', 'price': '40'},
+    {'image': "assets/images/r4.png", 'name': 'Redmi Note 4', 'price': '40'},
   ];
   @override
   Widget build(BuildContext context) {
@@ -157,74 +147,80 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisSpacing: 15,
                       mainAxisSpacing: 15),
                   itemBuilder: (context, index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                          color: Color(0xFFF2F2F2),
-                          borderRadius: BorderRadius.circular(15)),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                              height: 150,
+                    return InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (_)=>ProductDetailsScreen(product: products[index],)));
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Color(0xFFF2F2F2),
+                            borderRadius: BorderRadius.circular(15)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: Container(
+                                    height: 30,
+                                    width: 80,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(15)),
+                                    child: Center(
+                                        child: Text(
+                                      "50% OFF",
+                                      style:
+                                          TextStyle(fontWeight: FontWeight.bold),
+                                    )),
+                                  ),
+                                ),
+                                IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      Icons.favorite_outline,
+                                      color: Colors.black.withOpacity(0.5),
+                                    ))
+                              ],
+                            ),
+                            Container(
+                              height: 100,
                               width: double.infinity,
                               decoration: BoxDecoration(
                                   image: DecorationImage(
-                                      fit: BoxFit.cover,
+                                      // fit: BoxFit.cover,
                                       image: AssetImage(
-                                        products[index]['image']!,
-                                      )),
+                                    products[index]['image']!,
+                                  )),
                                   borderRadius: BorderRadius.circular(15)),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 10),
-                                        child: Container(
-                                          height: 30,
-                                          width: 80,
-                                          decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(15)),
-                                          child: Center(
-                                              child: Text(
-                                            "50% OFF",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                        ),
-                                      ),
-                                      IconButton(
-                                          onPressed: () {},
-                                          icon: Icon(Icons.favorite_outline,color: Colors.black.withOpacity(0.5),))
-                                    ],
+                                  Text(
+                                    products[index]['name']!,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 15),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    "\$${products[index]['price']!}",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
                                   ),
                                 ],
-                              )),
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  products[index]['name']!,
-                                  style: TextStyle(fontWeight: FontWeight.w500,fontSize: 15),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "\$${products[index]['price']!?? '10'}",
-                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     );
                   })

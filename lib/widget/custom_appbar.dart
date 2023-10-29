@@ -6,8 +6,11 @@ PreferredSizeWidget customAppBar(
     {String? title,
     List<Widget>? action,
     Widget? isLeading,
-    required BuildContext context}) {
+    required BuildContext context,
+    Color? backgroundColor}) {
   return AppBar(
+    backgroundColor: backgroundColor,
+    elevation: 0,
     centerTitle: true,
     automaticallyImplyLeading: false,
     leading: isLeading ??
@@ -17,8 +20,6 @@ PreferredSizeWidget customAppBar(
             },
             icon: const Icon(Icons.arrow_back)),
     title: title != null ? Text(title) : null,
-    actions: action != null
-        ? [IconButton(onPressed: () {}, icon: const Icon(Icons.search))]
-        : null,
+    actions:action,
   );
 }
