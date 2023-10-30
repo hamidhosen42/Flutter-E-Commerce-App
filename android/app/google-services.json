@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "758268943472",
+    "project_id": "lwn-ecommerce-a2b84",
+    "storage_bucket": "lwn-ecommerce-a2b84.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:758268943472:android:1c2a9eb77bc1eea62aa8b5",
+        "android_client_info": {
+          "package_name": "com.example.e_commerce"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtDathqm8BaOrPRd_titVIppGi7gxBDJg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -93,7 +93,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   CustomButton(
                     btnTitle: "Sign Up",
                     onTap: () {
-                      print("sdsf");
                     },
                   ),
                   SizedBox(
