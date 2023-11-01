@@ -60,15 +60,15 @@ class _SplashScreenState extends State<SplashScreen> {
               children: [
                 Text(
                   AppConfig.appName,
-                  style: const TextStyle(
+                  style: TextStyle(
                       color: Colors.white,
-                      fontSize: 25,
+                      fontSize: 25.sp,
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
                   "Version: 1.0",
                   style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 20.sp,
                       letterSpacing: 1,
                       color: Colors.grey,
                       fontWeight: FontWeight.w800,

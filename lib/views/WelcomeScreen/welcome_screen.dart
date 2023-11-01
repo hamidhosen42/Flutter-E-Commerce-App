@@ -3,6 +3,7 @@
 import 'package:e_commerce/utils/colors.dart';
 import 'package:e_commerce/views/Authentication/RegisterScreen/register_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../Authentication/LoginScreen/login_screen.dart';
 
@@ -16,6 +17,7 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
     return Scaffold(
       body: Center(
         child: Padding(
@@ -24,7 +26,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset("assets/images/get_started.png"),
+              SizedBox(
+                height: 5.h,
+              ),
+              Image.asset(
+                "assets/images/get_started.png",
+                width: size.width * 0.8,
+              ),
               Column(
                 children: [
                   Text(
@@ -32,14 +40,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: AppColor.primaryColor,
-                        fontSize: 40,
+                        fontSize: 35.sp,
                         fontWeight: FontWeight.w800),
+                  ),
+                  SizedBox(
+                    height: 10.h,
                   ),
                   Text(
                     "Explore all the existing job roles based on your interest and study major",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 15.sp,
                       color: Colors.black.withOpacity(0.5),
                     ),
                   ),
@@ -49,11 +60,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 children: [
                   Expanded(
                     child: InkWell(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (_)=>LoginScreen()));
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => LoginScreen()));
                       },
                       child: Container(
-                        height: 60,
+                        height: 50.h,
                         decoration: BoxDecoration(
                             color: AppColor.primaryColor,
                             boxShadow: [
@@ -66,7 +78,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           child: Text(
                             "Login",
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 18.sp,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                             ),
@@ -76,22 +88,25 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     ),
                   ),
                   SizedBox(
-                    width: 10,
+                    width: 10.w,
                   ),
                   Expanded(
-                    child:InkWell(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (_)=>RegisterScreen()));
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => RegisterScreen()));
                       },
                       child: Container(
-                        height: 60,
+                        height: 50.h,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10)),
                         child: Center(
                           child: Text(
                             "Register",
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 18.sp,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                             ),
