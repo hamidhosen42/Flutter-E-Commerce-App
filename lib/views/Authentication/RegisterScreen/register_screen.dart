@@ -2,14 +2,18 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/views/Authentication/LoginScreen/login_screen.dart';
-import 'package:e_commerce/views/BottomBavBarView/bottom_view.dart';
+import 'package:e_commerce/views/HomeScreen/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../helper/form_helper.dart';
 import '../../../utils/colors.dart';
 import '../../../widget/custom_appbar.dart';
 import '../../../widget/custom_button.dart';
+import '../ForgotScreen/forgot_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -23,6 +27,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _auth = FirebaseAuth.instance;
 
   final _emailController = TextEditingController();
+  final _nameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
@@ -47,35 +52,42 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: AppColor.primaryColor,
-                          fontSize: 35,
+                          fontSize: 30.sp,
                           fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 20.h,
                     ),
                     Text(
                       "Create an account so you can explore all the\nexisting jobs",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.black,
-                          fontSize: 18,
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.normal),
                     ),
                   ],
                 ),
                 SizedBox(
-                  height: 80,
+                  height: 40.h,
                 ),
                 Form(
                   key: _formState,
                   child: Column(
                     children: [
                       CutomTextField(
+                          controller: _nameController,
+                          hintText: "Name",
+                          isRequired: true),
+                      SizedBox(
+                        height: 15.h,
+                      ),
+                      CutomTextField(
                           controller: _emailController,
                           hintText: "Email",
                           isRequired: true),
                       SizedBox(
-                        height: 20,
+                        height: 15.h,
                       ),
                       CutomTextField(
                         controller: _passwordController,
@@ -93,7 +105,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 : Icon(Icons.visibility_off)),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 15.h,
                       ),
                       CutomTextField(
                         controller: _confirmPasswordController,
@@ -112,22 +124,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 : Icon(Icons.visibility_off)),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 10.h,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text(
-                            "Forgot your password",
-                            style: TextStyle(
-                                color: AppColor.primaryColor,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => ForgotScreen()));
+                            },
+                            child: Text(
+                              "Forgot your password",
+                              style: TextStyle(
+                                  color: AppColor.primaryColor,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500),
+                            ),
                           ),
                         ],
                       ),
                       SizedBox(
-                        height: 30,
+                        height: 20.h,
                       ),
                       CustomButton(
                         btnTitle: "Sign Up",
@@ -135,8 +155,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           if (_formState.currentState!.validate()) {
                             if (_passwordController.text !=
                                 _confirmPasswordController.text) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text("Password mismatch")));
+                              showTopSnackBar(
+                                  Overlay.of(context),
+                                  CustomSnackBar.error(
+                                    message: "Password mismatch",
+                                  ));
                             } else {
                               try {
                                 await _auth.createUserWithEmailAndPassword(
@@ -158,35 +181,58 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       .doc(_emailController.text)
                                       .set({
                                     'email': _emailController.text,
+                                    'name':_nameController.text,
+                                    'uid':FirebaseAuth.instance.currentUser!.uid
                                   }).then((value) {
-                                     Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => const BottomBarScreen()));
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) =>
+                                                const HomeScreen()));
+
+                                    showTopSnackBar(
+                                        Overlay.of(context),
+                                        CustomSnackBar.success(
+                                          message: "SignUp Successfully",
+                                        ));
                                   });
                                 } else {
-                                  await FirebaseFirestore.instance
+                                  await FirebaseFirestore.instance 
                                       .collection("users")
                                       .doc(_emailController.text)
                                       .update({
                                     'email': _emailController.text,
+                                     'name':_nameController.text,
+                                    'uid':FirebaseAuth.instance.currentUser!.uid
                                   }).then((value) {
-                                     Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => const LoginScreen()));
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) =>
+                                                const HomeScreen()));
+
+                                    showTopSnackBar(
+                                      Overlay.of(context),
+                                      CustomSnackBar.success(
+                                        message: "SignUp Successfully",
+                                      ),
+                                    );
                                   });
                                 }
                               } catch (e) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text(e.toString())));
+                                showTopSnackBar(
+                                  Overlay.of(context),
+                                  CustomSnackBar.error(
+                                    message: e.toString(),
+                                  ),
+                                );
                               }
                             }
                           }
                         },
                       ),
                       SizedBox(
-                        height: 30,
+                        height: 20.h,
                       ),
                       InkWell(
                         onTap: () {
@@ -196,7 +242,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: Text(
                           "Already have an account",
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w600),
+                              fontSize: 14.sp, fontWeight: FontWeight.w600),
                         ),
                       ),
                     ],
