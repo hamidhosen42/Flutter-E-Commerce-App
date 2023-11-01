@@ -40,6 +40,9 @@ dependencies:
   firebase_auth: ^4.12.0
   cloud_firestore: ^4.12.1
   cached_network_image: ^3.3.0
+  top_snackbar_flutter: ^3.1.0
+  flutter_screenutil: ^5.9.0
+  lottie: ^2.7.0
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +70,7 @@ flutter:
   assets:
     - assets/
     - assets/images/
+    - assets/json/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

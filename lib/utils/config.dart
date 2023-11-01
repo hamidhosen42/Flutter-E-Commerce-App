@@ -1,3 +1,3 @@
 class AppConfig{
-  static String appName = "LWM Ecommerce";
+  static String appName = "ShopSavvy";
 }
