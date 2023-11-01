@@ -4,8 +4,8 @@ import 'dart:async';
 
 import 'package:e_commerce/utils/colors.dart';
 import 'package:e_commerce/utils/config.dart';
+import 'package:e_commerce/views/Authentication/LoginScreen/login_screen.dart';
 import 'package:e_commerce/views/BottomBavBarView/bottom_view.dart';
-import 'package:e_commerce/views/WelcomeScreen/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
         if (event == null && mounted) {
           Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (_) => WelcomeScreen()),
+              MaterialPageRoute(builder: (_) => LoginScreen()),
               (route) => false);
         } else {
           Navigator.pushAndRemoveUntil(

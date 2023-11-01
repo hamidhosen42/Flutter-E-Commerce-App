@@ -6,6 +6,8 @@ import 'package:e_commerce/widget/custom_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../helper/form_helper.dart';
 import '../../../utils/colors.dart';
@@ -76,21 +78,21 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(
                       height: 20.h,
                     ),
-                   CutomTextField(
-                        controller: _passwordController,
-                        hintText: "Password",
-                        isRequired: true,
-                        secured: isPasswordSecured,
-                        suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                isPasswordSecured = !isPasswordSecured;
-                              });
-                            },
-                            icon: isPasswordSecured
-                                ? Icon(Icons.visibility)
-                                : Icon(Icons.visibility_off)),
-                      ),
+                    CutomTextField(
+                      controller: _passwordController,
+                      hintText: "Password",
+                      isRequired: true,
+                      secured: isPasswordSecured,
+                      suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              isPasswordSecured = !isPasswordSecured;
+                            });
+                          },
+                          icon: isPasswordSecured
+                              ? Icon(Icons.visibility)
+                              : Icon(Icons.visibility_off)),
+                    ),
                     SizedBox(
                       height: 10.h,
                     ),
@@ -98,8 +100,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         InkWell(
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (_)=>ForgotScreen()));
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => ForgotScreen()));
                           },
                           child: Text(
                             "Forgot your password",
@@ -116,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     CustomButton(
                       btnTitle: "Sign In",
-                      onTap: () async{
+                      onTap: () async {
                         if (_formState.currentState!.validate()) {
                           try {
                             await _auth
@@ -124,6 +129,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                     email: _emailController.text,
                                     password: _passwordController.text)
                                 .then((value) {
+                              showTopSnackBar(
+                                Overlay.of(context),
+                                CustomSnackBar.success(
+                                  message: "Login Successfully",
+                                ),
+                              );
                               Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(
@@ -131,8 +142,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                   (route) => false);
                             });
                           } catch (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(e.toString())));
+                            showTopSnackBar(
+                              Overlay.of(context),
+                              CustomSnackBar.error(
+                                message: e.toString(),
+                              ),
+                            );
                           }
                         }
                       },
