@@ -181,8 +181,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       .doc(_emailController.text)
                                       .set({
                                     'email': _emailController.text,
-                                    'name':_nameController.text,
-                                    'uid':FirebaseAuth.instance.currentUser!.uid
+                                    'name': _nameController.text,
+                                    'uid':
+                                        FirebaseAuth.instance.currentUser!.uid
                                   }).then((value) {
                                     Navigator.push(
                                         context,
@@ -197,13 +198,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         ));
                                   });
                                 } else {
-                                  await FirebaseFirestore.instance 
+                                  await FirebaseFirestore.instance
                                       .collection("users")
                                       .doc(_emailController.text)
                                       .update({
                                     'email': _emailController.text,
-                                     'name':_nameController.text,
-                                    'uid':FirebaseAuth.instance.currentUser!.uid
+                                    'name': _nameController.text,
+                                    'uid':
+                                        FirebaseAuth.instance.currentUser!.uid
                                   }).then((value) {
                                     Navigator.push(
                                         context,
