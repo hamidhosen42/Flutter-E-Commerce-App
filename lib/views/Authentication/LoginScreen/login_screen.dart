@@ -1,9 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
+import 'package:e_commerce/views/Authentication/ForgotScreen/forgot_screen.dart';
 import 'package:e_commerce/widget/custom_appbar.dart';
 import 'package:e_commerce/widget/custom_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../helper/form_helper.dart';
 import '../../../utils/colors.dart';
@@ -25,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
 
   bool isPasswordSecured = true;
-  bool isConfirmPasswordSecured = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,22 +45,22 @@ class _LoginScreenState extends State<LoginScreen> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: AppColor.primaryColor,
-                        fontSize: 35,
+                        fontSize: 30.sp,
                         fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
-                    height: 30,
+                    height: 25.h,
                   ),
                   Text(
                     "Welcome back you’ve\nbeen missed!",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.black,
-                        fontSize: 20,
+                        fontSize: 18.sp,
                         fontWeight: FontWeight.w600),
                   ),
                   SizedBox(
-                    height: 100,
+                    height: 80.h,
                   ),
                 ],
               ),
@@ -72,28 +74,40 @@ class _LoginScreenState extends State<LoginScreen> {
                       hintText: "Email",
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 20.h,
                     ),
-                    CutomTextField(
-                      controller: _passwordController,
-                      isRequired: true,
-                      hintText: "Password",
-                      secured: true,
-                      suffixIcon: IconButton(
-                          onPressed: () {}, icon: Icon(Icons.visibility)),
-                    ),
+                   CutomTextField(
+                        controller: _passwordController,
+                        hintText: "Password",
+                        isRequired: true,
+                        secured: isPasswordSecured,
+                        suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                isPasswordSecured = !isPasswordSecured;
+                              });
+                            },
+                            icon: isPasswordSecured
+                                ? Icon(Icons.visibility)
+                                : Icon(Icons.visibility_off)),
+                      ),
                     SizedBox(
-                      height: 10,
+                      height: 10.h,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text(
-                          "Forgot your password",
-                          style: TextStyle(
-                              color: AppColor.primaryColor,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500),
+                        InkWell(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (_)=>ForgotScreen()));
+                          },
+                          child: Text(
+                            "Forgot your password",
+                            style: TextStyle(
+                                color: AppColor.primaryColor,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500),
+                          ),
                         ),
                       ],
                     ),
