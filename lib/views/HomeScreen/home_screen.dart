@@ -183,15 +183,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             borderRadius:
                                                 BorderRadius.circular(10)),
                                         child: Center(
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: [
-                                              Image.network(
-                                                  data[index]['icon']!),
-                                              Text(data[index]['name'])
-                                            ],
-                                          ),
+                                          child:  Image.network(
+                                                  data[index]['icon']!)
                                         ),
                                       ),
                                     );

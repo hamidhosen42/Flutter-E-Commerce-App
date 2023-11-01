@@ -1,8 +1,8 @@
+import 'package:e_commerce/admin/views/BottomBavBarView/bottom_view.dart';
+import 'package:e_commerce/views/SplashScreen/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'views/SplashScreen/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
               useMaterial3: true),
+          // home: const BottomBarAdminScreen(),
           home: const SplashScreen(),
         );
       },

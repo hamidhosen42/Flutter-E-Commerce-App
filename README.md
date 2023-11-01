@@ -7,5 +7,4 @@
 5. Sign Up Screen
 6. Home Screen : 
     1. Top Categories
-    2. 
-   
+    2.  Dress (id-2)

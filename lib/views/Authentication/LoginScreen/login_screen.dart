@@ -9,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
+import '../../../admin/views/BottomBavBarView/bottom_view.dart';
 import '../../../helper/form_helper.dart';
 import '../../../utils/colors.dart';
 import '../../BottomBavBarView/bottom_view.dart';
@@ -123,31 +124,49 @@ class _LoginScreenState extends State<LoginScreen> {
                       btnTitle: "Sign In",
                       onTap: () async {
                         if (_formState.currentState!.validate()) {
-                          try {
-                            await _auth
-                                .signInWithEmailAndPassword(
-                                    email: _emailController.text,
-                                    password: _passwordController.text)
-                                .then((value) {
-                              showTopSnackBar(
-                                Overlay.of(context),
-                                CustomSnackBar.success(
-                                  message: "Login Successfully",
-                                ),
-                              );
-                              Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => const BottomBarScreen()),
-                                  (route) => false);
-                            });
-                          } catch (e) {
+                          if (_emailController.text == "admin6403@gmail.com" &&
+                              _passwordController.text == "admin6403admin") {
                             showTopSnackBar(
                               Overlay.of(context),
-                              CustomSnackBar.error(
-                                message: e.toString(),
+                              CustomSnackBar.success(
+                                message: "Admin User Login Successfully",
                               ),
                             );
+
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) =>
+                                        const BottomBarAdminScreen()),
+                                (route) => false);
+                          } else {
+                            try {
+                              await _auth
+                                  .signInWithEmailAndPassword(
+                                      email: _emailController.text,
+                                      password: _passwordController.text)
+                                  .then((value) {
+                                showTopSnackBar(
+                                  Overlay.of(context),
+                                  CustomSnackBar.success(
+                                    message: "Login Successfully",
+                                  ),
+                                );
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) =>
+                                            const BottomBarScreen()),
+                                    (route) => false);
+                              });
+                            } catch (e) {
+                              showTopSnackBar(
+                                Overlay.of(context),
+                                CustomSnackBar.error(
+                                  message: e.toString(),
+                                ),
+                              );
+                            }
                           }
                         }
                       },

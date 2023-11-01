@@ -21,7 +21,7 @@ class _SeeAllScreenState extends State<SeeAllScreen> {
     return Scaffold(
       appBar: customAppBar(context: context, title: "All Top Categories"),
       body: Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: StreamBuilder(
             stream: fireStore.collection('categories').snapshots(),
             builder: (_, snapshot) {
@@ -39,7 +39,7 @@ class _SeeAllScreenState extends State<SeeAllScreen> {
                     primary: false,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        crossAxisSpacing: 5,
+                        crossAxisSpacing: 20,
                         mainAxisSpacing: 20),
                     itemBuilder: (context, index) {
                       return InkWell(
@@ -50,21 +50,23 @@ class _SeeAllScreenState extends State<SeeAllScreen> {
                                   builder: (_) => ProductByCategory(
                                       category: data[index])));
                         },
-                        child: Container(
-                          margin: EdgeInsets.only(right: 15),
-                          decoration: BoxDecoration(
-                              color: Color(0xFFF2F2F2),
-                              border: Border.all(color: Color(0xFFD8D3D3)),
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Image.network(
-                                  data[index]['icon']!,
-                                ),
-                                Text(data[index]['name'])
-                              ],
+                        child: Center(
+                          child: Container(
+                            margin: EdgeInsets.only(right: 15),
+                            decoration: BoxDecoration(
+                                color: Color(0xFFF2F2F2),
+                                border: Border.all(color: Color(0xFFD8D3D3)),
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  Image.network(
+                                    data[index]['icon']!,
+                                  ),
+                                  Text(data[index]['name'])
+                                ],
+                              ),
                             ),
                           ),
                         ),
