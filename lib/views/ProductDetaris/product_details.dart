@@ -1,12 +1,13 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/utils/colors.dart';
 import 'package:e_commerce/widget/custom_appbar.dart';
 import 'package:e_commerce/widget/custom_button.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
-  final Map<String, String> product;
+  final QueryDocumentSnapshot<Map<String, dynamic>> product;
 
   ProductDetailsScreen({super.key, required this.product});
 
@@ -15,8 +16,23 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
-  List<String> productVariant = ['20', '34', '45', '50', '60', '55'];
+  // List<String> productVariant = ['20', '34', '45', '50', '60', '55'];
   int selectedIndex = 0;
+  String? selectedVarience;
+
+  void changeSelectedValue(){
+    setState(() {
+      selectedVarience = widget.product['variant'][0];
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    changeSelectedValue();
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
@@ -32,7 +48,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               height: size.height * 0.3,
               color: const Color(0xFFD9D9D9),
               child: Center(
-                child: Image.asset(widget.product['image']!),
+                child: Image.network(widget.product['image']!),
               ),
             ),
             Padding(
@@ -87,8 +103,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20),
                       ),
-                      Text(
+
+                      widget.product['stock']==true?Text(
                         "Available in stock",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black.withOpacity(0.5)),
+                      ):Text(
+                        "Stock Out",
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
                             color: Colors.black.withOpacity(0.5)),
@@ -134,13 +156,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               child: ListView.builder(
                   shrinkWrap: true,
                   primary: false,
-                  itemCount: 6,
+                  itemCount: widget.product['variant'].length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
                         setState(() {
                           selectedIndex = index;
+                          selectedVarience = widget.product['variant'][index];
                         });
                       },
                       child: Container(
@@ -158,7 +181,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             borderRadius: BorderRadius.circular(10)),
                         child: Center(
                           child: Text(
-                            productVariant[index],
+                            widget.product['variant'][index],
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 color: selectedIndex == index
@@ -170,7 +193,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     );
                   }),
             ),
-            CustomButton(btnTitle: "Add To Cart")
+            widget.product['stock']==true? CustomButton(btnTitle: "Add To Cart"):Container()
           ],
         ),
       ),

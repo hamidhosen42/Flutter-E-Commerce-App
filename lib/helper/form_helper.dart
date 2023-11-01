@@ -9,18 +9,32 @@ class CutomTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final bool? secured;
   final Widget? suffixIcon;
+  final bool? isRequired;
+  final TextEditingController? controller;
   const CutomTextField(
       {super.key,
       required this.hintText,
       this.keyboardType,
       this.secured,
-      this.suffixIcon});
+      this.suffixIcon,
+      this.isRequired,
+      this.controller
+      });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       keyboardType: keyboardType,
       obscureText: secured ?? false,
+      validator: isRequired == true
+          ? (value) {
+              if (value!.isEmpty) {
+                return "The Field is required";
+              }
+              return null;
+            }
+          : null,
       style: TextStyle(fontWeight: FontWeight.w500),
       decoration: InputDecoration(
           hintText: hintText,
