@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 import '../Authentication/LoginScreen/login_screen.dart';
 import '../ProductDetaris/product_details.dart';
+import '../ProductsByCategory/pbc_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -132,22 +133,30 @@ class _HomeScreenState extends State<HomeScreen> {
                             primary: false,
                             itemCount: data.length,
                             itemBuilder: (context, index) {
-                              return Container(
-                                margin: EdgeInsets.only(right: 15),
-                                width: 70,
-                                decoration: BoxDecoration(
-                                    color: Color(0xFFF2F2F2),
-                                    border:
-                                        Border.all(color: Color(0xFFD8D3D3)),
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: Center(
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Image.network(data[index]['icon']!),
-                                      Text(data[index]['name'])
-                                    ],
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => ProductByCategory( category:data[index])));
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.only(right: 15),
+                                  width: 70,
+                                  decoration: BoxDecoration(
+                                      color: Color(0xFFF2F2F2),
+                                      border:
+                                          Border.all(color: Color(0xFFD8D3D3)),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Image.network(data[index]['icon']!),
+                                        Text(data[index]['name'])
+                                      ],
+                                    ),
                                   ),
                                 ),
                               );
@@ -218,7 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   BorderRadius.circular(15)),
                                           child: Center(
                                               child: Text(
-                                            '${ data[index]['discount']}%OFF',
+                                            '${data[index]['discount']}%OFF',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           )),

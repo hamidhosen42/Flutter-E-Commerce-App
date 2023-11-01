@@ -1,8 +1,8 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/views/Authentication/LoginScreen/login_screen.dart';
-import 'package:e_commerce/views/HomeScreen/home_screen.dart';
+import 'package:e_commerce/views/BottomBavBarView/bottom_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -87,7 +87,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               setState(() {
                                 isPasswordSecured = !isPasswordSecured;
                               });
-                            }, icon:isPasswordSecured? Icon(Icons.visibility):Icon(Icons.visibility_off)),
+                            },
+                            icon: isPasswordSecured
+                                ? Icon(Icons.visibility)
+                                : Icon(Icons.visibility_off)),
                       ),
                       SizedBox(
                         height: 20,
@@ -96,13 +99,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         controller: _confirmPasswordController,
                         hintText: "Confirm Password",
                         isRequired: true,
-                       secured: isConfirmPasswordSecured,
+                        secured: isConfirmPasswordSecured,
                         suffixIcon: IconButton(
                             onPressed: () {
                               setState(() {
-                                isConfirmPasswordSecured = !isConfirmPasswordSecured;
+                                isConfirmPasswordSecured =
+                                    !isConfirmPasswordSecured;
                               });
-                            }, icon:isConfirmPasswordSecured? Icon(Icons.visibility):Icon(Icons.visibility_off)),
+                            },
+                            icon: isConfirmPasswordSecured
+                                ? Icon(Icons.visibility)
+                                : Icon(Icons.visibility_off)),
                       ),
                       SizedBox(
                         height: 10,
@@ -124,7 +131,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       CustomButton(
                         btnTitle: "Sign Up",
-                        onTap: () {
+                        onTap: () async {
                           if (_formState.currentState!.validate()) {
                             if (_passwordController.text !=
                                 _confirmPasswordController.text) {
@@ -132,19 +139,44 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   SnackBar(content: Text("Password mismatch")));
                             } else {
                               try {
-                                _auth.createUserWithEmailAndPassword(
+                                await _auth.createUserWithEmailAndPassword(
                                     email: _emailController.text,
                                     password: _passwordController.text);
 
-                                    FirebaseFirestore.instance.collection("users").doc( _emailController.text).set({
-                                      'email':_emailController.text,
-                                    }
-                                    );
-                                Navigator.pushAndRemoveUntil(
+                                //! User data get
+
+                                final userData = await FirebaseFirestore
+                                    .instance
+                                    .collection("users")
+                                    .where("email",
+                                        isEqualTo: _emailController.text)
+                                    .get();
+
+                                if (userData.docs.isEmpty) {
+                                  await FirebaseFirestore.instance
+                                      .collection("users")
+                                      .doc(_emailController.text)
+                                      .set({
+                                    'email': _emailController.text,
+                                  }).then((value) {
+                                     Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (_) => const HomeScreen()),
-                                    (route) => false);
+                                        builder: (_) => const BottomBarScreen()));
+                                  });
+                                } else {
+                                  await FirebaseFirestore.instance
+                                      .collection("users")
+                                      .doc(_emailController.text)
+                                      .update({
+                                    'email': _emailController.text,
+                                  }).then((value) {
+                                     Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => const LoginScreen()));
+                                  });
+                                }
                               } catch (e) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(content: Text(e.toString())));

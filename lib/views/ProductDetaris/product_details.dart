@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/utils/colors.dart';
 import 'package:e_commerce/widget/custom_appbar.dart';
 import 'package:e_commerce/widget/custom_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -16,9 +17,9 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
-  // List<String> productVariant = ['20', '34', '45', '50', '60', '55'];
   int selectedIndex = 0;
   String? selectedVarience;
+  final user = FirebaseAuth.instance.currentUser;
 
   void changeSelectedValue(){
     setState(() {
@@ -193,7 +194,21 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     );
                   }),
             ),
-            widget.product['stock']==true? CustomButton(btnTitle: "Add To Cart"):Container()
+            widget.product['stock']==true? CustomButton(btnTitle: "Add To Cart",onTap: ()async{
+              await FirebaseFirestore.instance.collection('users').doc(user!.email).collection('cart').add({
+                'user_email':user!.email,
+                'product_id':widget.product['id'],
+                'name':widget.product['name'],
+                'price':widget.product['price'],
+                'image':widget.product['image'],
+                'cat_id':widget.product['cat_id'],
+                'variant':selectedVarience,
+                'quantity':1,
+              }).then((value) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text("Product successfully added to cart")));
+              });
+            },):Container()
           ],
         ),
       ),
