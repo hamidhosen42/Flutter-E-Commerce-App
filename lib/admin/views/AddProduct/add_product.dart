@@ -268,10 +268,11 @@ class _AddProductState extends State<AddProduct> {
                         onTap: () async {
                           if (_formState.currentState!.validate()) {
                             try {
-                              await FirebaseFirestore.instance
+                              final data = await FirebaseFirestore.instance
                                   .collection("products")
-                                  .doc()
-                                  .set({
+                                  .doc();
+                              data.set({
+                                'id': data.id.toString(),
                                 'name': _nameController.text,
                                 'price': _priceController.text,
                                 'image': _imageController.text,
@@ -279,7 +280,7 @@ class _AddProductState extends State<AddProduct> {
                                 'description': _descriptionController.text,
                                 'stock':
                                     selectedValue == "Stock Out" ? false : true,
-                                    'variant':selectedVariantItems.toList()
+                                'variant': selectedVariantItems.toList()
                               }).then((value) {
                                 showTopSnackBar(
                                     Overlay.of(context),
@@ -292,8 +293,8 @@ class _AddProductState extends State<AddProduct> {
                                 _imageController.clear();
                                 _discountController.clear();
                                 _descriptionController.clear();
-                                selectedValue="0";
-                                selectedVariantItems=[];
+                                selectedValue = "0";
+                                selectedVariantItems = [];
                               });
                             } catch (e) {
                               showTopSnackBar(

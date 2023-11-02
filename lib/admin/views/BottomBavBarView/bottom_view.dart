@@ -37,7 +37,7 @@ class _BottomBarAdminScreenState extends State<BottomBarAdminScreen> {
             });
           },
           items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Dashboard"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.add), label: "Add Product"),
             BottomNavigationBarItem(

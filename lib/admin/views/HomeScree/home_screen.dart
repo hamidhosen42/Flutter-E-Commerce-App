@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../widget/dashboard_button.dart';
 
@@ -15,7 +17,6 @@ class AdminHomeScreen extends StatefulWidget {
 }
 
 class _AdminHomeScreenState extends State<AdminHomeScreen> {
-  final fireStore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -144,129 +145,110 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                 ),
               ],
             ),
+            SizedBox(
+              height: 10.h,
+            ),
             Divider(
-              color: AppColor.fieldBackgroundColor,
+              color: AppColor.primaryColor,
               thickness: 2,
             ),
             Align(
               alignment: Alignment.bottomLeft,
               child: Text(
                 "Recent Product",
-                style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w700),
+                style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w700),
               ),
             ),
-            SizedBox(height: 10.h),
             StreamBuilder(
-              stream: fireStore.collection('products').snapshots(),
-              builder: (context, snapshot) {
-                final data = snapshot.data?.docs ?? [];
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      color: AppColor.primaryColor,
-                    ),
-                  );
+              stream:
+                  FirebaseFirestore.instance.collection("products").snapshots(),
+              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(child: CircularProgressIndicator());
                 } else {
                   return Expanded(
-                    child: GridView.builder(
-                        itemCount: data.length,
-                        shrinkWrap: true,
-                        primary: false,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 0.8,
-                            crossAxisSpacing: 15,
-                            mainAxisSpacing: 15),
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (_) =>
-                              //             ProductDetailsScreen(
-                              //               product: data[index],
-                              //             )));
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: Color(0xFFF2F2F2),
-                                  borderRadius: BorderRadius.circular(15)),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 10),
-                                        child: Container(
-                                          height: 30,
-                                          width: 80,
-                                          decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(15)),
-                                          child: Center(
-                                              child: Text(
-                                            '${data[index]['discount']}%OFF',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                        ),
+                    child: ListView(
+                      children: List.generate(
+                        snapshot.data!.docs.length,
+                        (index) {
+                          var data = snapshot.data!.docs[index];
+                          return Card(
+                            color: AppColor.fieldBackgroundColor,
+                            child: ListTile(
+                              onTap: () {},
+                              leading: data['image'] != null
+                                  ? ClipRRect(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(
+                                              10)), // Adjust the radius as needed
+                                      child: Image.network(
+                                        data['image'],
+                                        width: 50.w,
+                                        fit: BoxFit.fill,
                                       ),
-                                      IconButton(
-                                          onPressed: () {},
-                                          icon: Icon(
-                                            Icons.favorite_outline,
-                                            color:
-                                                Colors.black.withOpacity(0.5),
-                                          ))
-                                    ],
-                                  ),
-                                  Container(
-                                    height: 100,
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            // fit: BoxFit.cover,
-                                            image: NetworkImage(
-                                          data[index]['image'],
-                                        )),
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          data[index]['name'],
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 15),
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          "\$${data[index]['price']}",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 18),
-                                        ),
-                                      ],
+                                    )
+                                  : CircularProgressIndicator(
+                                      color: AppColor.primaryColor,
                                     ),
-                                  )
+                              title: Text(
+                                data['name'],
+                                style: TextStyle(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              subtitle: Text("${data['price']} BDT",
+                                  style: TextStyle(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w700)),
+                              trailing: PopupMenuButton(
+                                itemBuilder: (context) => [
+                                  PopupMenuItem(
+                                    child: InkWell(
+                                      onTap: () {
+                                        // controller.approvedPackage(docId: data.id);
+                                        // Get.snackbar(
+                                        //     "Successful", "Successfully Approved");
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons.edit),
+                                          SizedBox(width: 10.w),
+                                          Text("Edit"),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  PopupMenuItem(
+                                    child: InkWell(
+                                      onTap: () {
+                                        FirebaseFirestore.instance
+                                            .collection('products')
+                                            .doc(data.id)
+                                            .delete();
+                                        showTopSnackBar(
+                                            Overlay.of(context),
+                                            CustomSnackBar.success(
+                                              message:
+                                                  "Successfully Product Delete",
+                                            ));
+                                            Navigator.pop(context);
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons.delete),
+                                          SizedBox(width: 10.w),
+                                          Text("Delete"),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
                           );
-                        }),
+                        },
+                      ),
+                    ),
                   );
                 }
               },
