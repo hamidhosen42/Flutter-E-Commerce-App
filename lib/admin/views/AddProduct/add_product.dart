@@ -1,8 +1,7 @@
-// ignore_for_file: unused_field, use_build_context_synchronously, prefer_const_constructors, avoid_unnecessary_containers
+// ignore_for_file: unused_field, use_build_context_synchronously, prefer_const_constructors, avoid_unnecessary_containers, avoid_print
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:e_commerce/widget/custom_appbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,10 +22,15 @@ class AddProductScreen extends StatefulWidget {
 class _AddProductScreenState extends State<AddProductScreen> {
   final _formState = GlobalKey<FormState>();
   final _auth = FirebaseAuth.instance;
-  final List<String> stockItems = [
-    'Stock Out',
-    'Available in stock',
-  ];
+  final fireStore = FirebaseFirestore.instance;
+
+  final _nameController = TextEditingController();
+  final _priceController = TextEditingController();
+  final _imageController = TextEditingController();
+  final _discountController = TextEditingController();
+  final _descriptionController = TextEditingController();
+
+  // ! ========== variant ============
   final List<String> variantItems = [
     '20',
     '25',
@@ -38,18 +42,31 @@ class _AddProductScreenState extends State<AddProductScreen> {
   ];
   List<String> selectedVariantItems = [];
 
-  String? selectedValue;
+  // ! =============Stock ===============
+  final List<String> stockItems = [
+    'Stock Out',
+    'Available in stock',
+  ];
+  String? selectedStockValue;
 
-  final _nameController = TextEditingController();
-  final _priceController = TextEditingController();
-  final _imageController = TextEditingController();
-  final _discountController = TextEditingController();
-  final _descriptionController = TextEditingController();
+  // ! ==============Categories============
+  String? selectedcategoriesValue;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: customAppBar(context: context, title: "Add Product"),
+        appBar: AppBar(
+          title: Text(
+            "Add Product",
+            style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+          ),
+        ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
@@ -57,9 +74,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 key: _formState,
                 child: Column(
                   children: [
-                    SizedBox(
-                      height: 30.h,
-                    ),
                     CutomTextField(
                       controller: _nameController,
                       isRequired: true,
@@ -146,10 +160,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         }
                         return null;
                       },
-                      value: selectedValue,
+                      value: selectedStockValue,
                       onChanged: (String? value) {
                         setState(() {
-                          selectedValue = value;
+                          selectedStockValue = value;
                         });
                       },
                       iconStyleData: IconStyleData(
@@ -167,6 +181,76 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       menuItemStyleData: const MenuItemStyleData(
                         padding: EdgeInsets.symmetric(horizontal: 16),
                       ),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+
+                    StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection('categories')
+                          .snapshots(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('Something went wrong');
+                        }
+
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        }
+
+                        return DropdownButtonFormField2<String>(
+                          isExpanded: true,
+                          decoration: InputDecoration(
+                              hintText: "Select Your Categories",
+                              filled: true,
+                              fillColor: AppColor.fieldBackgroundColor,
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent))),
+                          items: snapshot.data!.docs
+                              .map((item) => DropdownMenuItem<String>(
+                                    value: item['name'],
+                                    child: Text(
+                                      item['name'],
+                                      style: TextStyle(
+                                        fontSize: 14.sp,
+                                      ),
+                                    ),
+                                  ))
+                              .toList(),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "The Field is required";
+                            }
+                            return null;
+                          },
+                          value: selectedcategoriesValue,
+                          onChanged: (String? value) {
+                            setState(() {
+                              selectedcategoriesValue = value;
+                            });
+                          },
+                          iconStyleData: IconStyleData(
+                            icon: Icon(
+                              Icons.arrow_drop_down,
+                              color: Colors.black45,
+                            ),
+                            iconSize: 24.sp,
+                          ),
+                          dropdownStyleData: DropdownStyleData(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          menuItemStyleData: const MenuItemStyleData(
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                          ),
+                        );
+                      },
                     ),
                     SizedBox(
                       height: 10.h,
@@ -277,8 +361,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                 'image': _imageController.text,
                                 'discount': _discountController.text,
                                 'description': _descriptionController.text,
-                                'stock':
-                                    selectedValue == "Stock Out" ? false : true,
+                                'stock': selectedStockValue == "Stock Out"
+                                    ? false
+                                    : true,
+                                'categories': selectedcategoriesValue,
                                 'variant': selectedVariantItems.toList()
                               }).then((value) {
                                 showTopSnackBar(
@@ -292,8 +378,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                 _imageController.clear();
                                 _discountController.clear();
                                 _descriptionController.clear();
-                                selectedValue = "0";
+                                selectedStockValue = "0";
                                 selectedVariantItems = [];
+                                // categoriesItems = [];
                               });
                             } catch (e) {
                               showTopSnackBar(

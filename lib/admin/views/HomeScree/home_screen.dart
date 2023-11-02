@@ -76,7 +76,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                         },
                         child: dashboardButton(
                           context: context,
-                          title: "Tour Guide",
+                          title: "Categories",
                           quantity: snapshot.data!.docs.length.toString(),
                           icon: "assets/images/direction.png",
                         ),
@@ -119,24 +119,20 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                 ),
                 StreamBuilder(
                   stream:
-                      FirebaseFirestore.instance.collection("sds").snapshots(),
+                      FirebaseFirestore.instance.collection("banners").snapshots(),
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (!snapshot.hasData) {
                       return Center(
                         child: CircularProgressIndicator(),
                       );
-                    } else if (snapshot.hasError) {
-                      return Center(
-                        child: Text("Hamid"),
-                      );
-                    } else {
+                    }else {
                       return InkWell(
                         onTap: () {
                           // Get.to(() => TourGuidePackageScreen());
                         },
                         child: dashboardButton(
                           context: context,
-                          title: "Tour Guide",
+                          title: "Banners",
                           quantity: snapshot.data!.docs.length.toString(),
                           icon: "assets/images/clock.png",
                         ),

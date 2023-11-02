@@ -3,6 +3,7 @@
 import 'package:e_commerce/utils/colors.dart';
 import 'package:flutter/material.dart';
 
+import '../AddCategories/add_categories.dart';
 import '../AddProduct/add_product.dart';
 import '../HomeScree/home_screen.dart';
 
@@ -18,7 +19,7 @@ class _BottomBarAdminScreenState extends State<BottomBarAdminScreen> {
   List<Widget> screen = [
     AdminHomeScreen(),
     AddProductScreen(),
-    AddProductScreen(),
+    AddCategorieScreen(),
     AddProductScreen(),
   ];
   @override
@@ -41,7 +42,7 @@ class _BottomBarAdminScreenState extends State<BottomBarAdminScreen> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.add), label: "Add Product"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_cart), label: "Cart"),
+                icon: Icon(Icons.category), label: "Add Categorie"),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
           ]),
     );

@@ -12,7 +12,7 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../../helper/form_helper.dart';
 import '../../../utils/colors.dart';
 import '../../../widget/custom_button.dart';
-import '../HomeScree/home_screen.dart';
+import '../BottomBavBarView/bottom_view.dart';
 
 class EditProductScreen extends StatefulWidget {
   final dynamic product;
@@ -313,7 +313,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (_) => AdminHomeScreen()));
+                                        builder: (_) => BottomBarAdminScreen()));
                               });
                             } catch (e) {
                               showTopSnackBar(
