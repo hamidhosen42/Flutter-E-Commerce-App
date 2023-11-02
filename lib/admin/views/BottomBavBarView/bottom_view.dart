@@ -17,9 +17,9 @@ class _BottomBarAdminScreenState extends State<BottomBarAdminScreen> {
   int selectedIndex = 0;
   List<Widget> screen = [
     AdminHomeScreen(),
-    AddProduct(),
-    AddProduct(),
-    AddProduct(),
+    AddProductScreen(),
+    AddProductScreen(),
+    AddProductScreen(),
   ];
   @override
   Widget build(BuildContext context) {

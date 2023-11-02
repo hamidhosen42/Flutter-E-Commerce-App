@@ -1,4 +1,4 @@
-// ignore_for_file: unused_field, use_build_context_synchronously, prefer_const_constructors, avoid_unnecessary_containers
+// ignore_for_file: unused_field, use_build_context_synchronously, prefer_const_constructors, avoid_unnecessary_containers, use_key_in_widget_constructors, must_be_immutable, prefer_final_fields
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -12,21 +12,26 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../../helper/form_helper.dart';
 import '../../../utils/colors.dart';
 import '../../../widget/custom_button.dart';
+import '../HomeScree/home_screen.dart';
 
-class AddProductScreen extends StatefulWidget {
-  const AddProductScreen({super.key});
+class EditProductScreen extends StatefulWidget {
+  final dynamic product;
+  const EditProductScreen({required this.product});
 
   @override
-  State<AddProductScreen> createState() => _AddProductScreenState();
+  State<EditProductScreen> createState() => _EditProductScreenState();
 }
 
-class _AddProductScreenState extends State<AddProductScreen> {
+class _EditProductScreenState extends State<EditProductScreen> {
   final _formState = GlobalKey<FormState>();
   final _auth = FirebaseAuth.instance;
-  final List<String> stockItems = [
-    'Stock Out',
-    'Available in stock',
-  ];
+
+  var _nameController = TextEditingController();
+  var _priceController = TextEditingController();
+  var _imageController = TextEditingController();
+  final _discountController = TextEditingController();
+  final _descriptionController = TextEditingController();
+
   final List<String> variantItems = [
     '20',
     '25',
@@ -36,20 +41,40 @@ class _AddProductScreenState extends State<AddProductScreen> {
     '45',
     '50',
   ];
-  List<String> selectedVariantItems = [];
+  final List<String> stockItems = [
+    'Stock Out',
+    'Available in stock',
+  ];
 
   String? selectedValue;
+  List<dynamic> selectedVariantItems = [];
 
-  final _nameController = TextEditingController();
-  final _priceController = TextEditingController();
-  final _imageController = TextEditingController();
-  final _discountController = TextEditingController();
-  final _descriptionController = TextEditingController();
+  void changeSelectedValue() {
+    setState(() {
+      selectedVariantItems = widget.product['variant'];
+      selectedValue =
+          widget.product['stock'] == true ? 'Available in stock' : 'Stock Out';
+    });
+  }
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _nameController.text = widget.product['name'];
+    _priceController.text = widget.product['price'];
+    _imageController.text = widget.product['image'];
+    _discountController.text = widget.product['discount'];
+    _descriptionController.text = widget.product['description'];
+
+    changeSelectedValue();
+  }
+
+  bool isPasswordSecured = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: customAppBar(context: context, title: "Add Product"),
+        appBar: customAppBar(context: context, title: "Update Product"),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
@@ -263,15 +288,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     ),
                     // !=============== Add Product botton ===================
                     CustomButton(
-                        btnTitle: "Add Product",
+                        btnTitle: "Update Product",
                         onTap: () async {
                           if (_formState.currentState!.validate()) {
                             try {
                               final data = FirebaseFirestore.instance
                                   .collection("products")
-                                  .doc();
-                              await data.set({
-                                'id': data.id.toString(),
+                                  .doc(widget.product['id']);
+                              await data.update({
                                 'name': _nameController.text,
                                 'price': _priceController.text,
                                 'image': _imageController.text,
@@ -284,16 +308,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                 showTopSnackBar(
                                     Overlay.of(context),
                                     CustomSnackBar.success(
-                                      message: "Product Added Successfully",
+                                      message: "Product Update Successfully",
                                     ));
-
-                                _nameController.clear();
-                                _priceController.clear();
-                                _imageController.clear();
-                                _discountController.clear();
-                                _descriptionController.clear();
-                                selectedValue = "0";
-                                selectedVariantItems = [];
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => AdminHomeScreen()));
                               });
                             } catch (e) {
                               showTopSnackBar(

@@ -8,6 +8,7 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../widget/dashboard_button.dart';
+import '../EditProduct/edit_product.dart';
 
 class AdminHomeScreen extends StatefulWidget {
   const AdminHomeScreen({super.key});
@@ -205,9 +206,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                   PopupMenuItem(
                                     child: InkWell(
                                       onTap: () {
-                                        // controller.approvedPackage(docId: data.id);
-                                        // Get.snackbar(
-                                        //     "Successful", "Successfully Approved");
+                                       Navigator.push(context, MaterialPageRoute(builder: (_)=>EditProductScreen(product:data)));
                                       },
                                       child: Row(
                                         children: [
