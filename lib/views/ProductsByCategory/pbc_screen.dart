@@ -23,31 +23,34 @@ class _ProductByCategoryState extends State<ProductByCategory> {
     final fireStore = FirebaseFirestore.instance;
     return Scaffold(
       appBar: customAppBar(context: context,title: widget.category['name']),
-      body: StreamBuilder(
-                  stream: fireStore.collection('products').where('cat_id',isEqualTo: widget.category['id']).snapshots(),
-                  builder: (_, snapshot) {
-                    final data = snapshot.data?.docs ?? [];
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
-                        child: CircularProgressIndicator(
-                          color: AppColor.primaryColor,
-                        ),
-                      );
-                    } else {
-                      return ListView.builder(
-                          shrinkWrap: true,
-                          primary: false,
-                          itemCount: data.length,
-                          itemBuilder: (context, index) {
-                            return Card(
-                              child: ListTile(
-                                title: Text(data[index]['name']),
-                                subtitle: Text('\$${data[index]['price']}'),
-                              ),
-                            );
-                          });
-                    }
-                  }),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: StreamBuilder(
+                    stream: fireStore.collection('products').where('cat_id',isEqualTo: widget.category['id']).snapshots(),
+                    builder: (_, snapshot) {
+                      final data = snapshot.data?.docs ?? [];
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            color: AppColor.primaryColor,
+                          ),
+                        );
+                      } else {
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            primary: false,
+                            itemCount: data.length,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                child: ListTile(
+                                  title: Text(data[index]['name']),
+                                  subtitle: Text('\$${data[index]['price']}'),
+                                ),
+                              );
+                            });
+                      }
+                    }),
+      ),
     );
   }
 }

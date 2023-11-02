@@ -4,6 +4,7 @@ import 'package:e_commerce/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 import '../AddProduct/add_product.dart';
+import '../HomeScree/home_screen.dart';
 
 class BottomBarAdminScreen extends StatefulWidget {
   const BottomBarAdminScreen({super.key});
@@ -15,7 +16,7 @@ class BottomBarAdminScreen extends StatefulWidget {
 class _BottomBarAdminScreenState extends State<BottomBarAdminScreen> {
   int selectedIndex = 0;
   List<Widget> screen = [
-    AddProduct(),
+    AdminHomeScreen(),
     AddProduct(),
     AddProduct(),
     AddProduct(),

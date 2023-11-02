@@ -27,8 +27,8 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
               useMaterial3: true),
-          // home: const BottomBarAdminScreen(),
-          home: const SplashScreen(),
+          home: const BottomBarAdminScreen(),
+          // home: const SplashScreen(),
         );
       },
     );

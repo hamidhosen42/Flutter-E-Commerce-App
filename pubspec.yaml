@@ -44,6 +44,7 @@ dependencies:
   flutter_screenutil: ^5.9.0
   lottie: ^2.7.0
   dropdown_button2: ^2.3.9
+  velocity_x: ^4.1.1
 
 dev_dependencies:
   flutter_test:
