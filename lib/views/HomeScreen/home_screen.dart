@@ -68,6 +68,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+
+                    TextField(
+                      onChanged: (value)async{
+                        final data = await FirebaseFirestore.instance.collection("products").where('name',arrayContains: [value]).get();
+
+                        if(data.docs.isEmpty)
+                        {
+
+                        }
+                      },
+                    ),
                     StreamBuilder(
                         stream: fireStore
                             .collection('users')
@@ -133,7 +144,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         TextButton(
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (_)=>SeeAllScreen()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => SeeAllScreen()));
                           },
                           child: Text("See All",
                               style: TextStyle(color: AppColor.primaryColor)),
@@ -183,9 +197,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             borderRadius:
                                                 BorderRadius.circular(10)),
                                         child: Center(
-                                          child:  Image.network(
-                                                  data[index]['icon']!)
-                                        ),
+                                            child: Image.network(
+                                                data[index]['icon']!)),
                                       ),
                                     );
                                   }),
@@ -234,6 +247,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             builder: (_) =>
                                                 ProductDetailsScreen(
                                                   product: data[index],
+                                                  rool: 'admin'
                                                 )));
                                   },
                                   child: Container(

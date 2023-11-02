@@ -6,11 +6,14 @@ import 'package:e_commerce/widget/custom_appbar.dart';
 import 'package:e_commerce/widget/custom_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   final QueryDocumentSnapshot<Map<String, dynamic>> product;
+  final String rool;
 
-  ProductDetailsScreen({super.key, required this.product});
+  ProductDetailsScreen({super.key, required this.product, required this.rool});
 
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
@@ -21,7 +24,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   String? selectedVarience;
   final user = FirebaseAuth.instance.currentUser;
 
-  void changeSelectedValue(){
+  void changeSelectedValue() {
     setState(() {
       selectedVarience = widget.product['variant'][0];
     });
@@ -104,18 +107,19 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20),
                       ),
-
-                      widget.product['stock']==true?Text(
-                        "Available in stock",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black.withOpacity(0.5)),
-                      ):Text(
-                        "Stock Out",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black.withOpacity(0.5)),
-                      ),
+                      widget.product['stock'] == true
+                          ? Text(
+                              "Available in stock",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black.withOpacity(0.5)),
+                            )
+                          : Text(
+                              "Stock Out",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black.withOpacity(0.5)),
+                            ),
                     ],
                   ),
                   SizedBox(
@@ -129,7 +133,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     height: 10,
                   ),
                   Text(
-                    "The upgraded S6 SiP runs up to 20 percent faster, allowing apps to also launch 20 percent faster, while maintaining the same all-day 18-hour battery life.The upgraded S6 SiP runs up to 20 percent faster, allowing apps to also launch 20 percent faster, while maintaining the same all-day 18-hour battery life.The upgraded S6 SiP runs up to 20 percent faster, allowing apps to also launch 20 percent faster, while maintaining the same all-day 18-hour battery life.The upgraded S6 SiP runs up to 20 percent faster, allowing apps to also launch 20 percent faster, while maintaining the same all-day 18-hour battery life.The upgraded S6 SiP runs up to 20 percent faster, allowing apps to also launch 20 percent faster, while maintaining the same all-day 18-hour battery life.The upgraded S6 SiP runs up to 20 percent faster, allowing apps to also launch 20 percent faster, while maintaining the same all-day 18-hour battery life.",
+                    widget.product['description']!,
                     textAlign: TextAlign.justify,
                     style: TextStyle(color: Colors.black.withOpacity(0.5)),
                   ),
@@ -194,21 +198,35 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     );
                   }),
             ),
-            widget.product['stock']==true? CustomButton(btnTitle: "Add To Cart",onTap: ()async{
-              await FirebaseFirestore.instance.collection('users').doc(user!.email).collection('cart').add({
-                'user_email':user!.email,
-                'product_id':widget.product['id'],
-                'name':widget.product['name'],
-                'price':widget.product['price'],
-                'image':widget.product['image'],
-                'cat_id':widget.product['cat_id'],
-                'variant':selectedVarience,
-                'quantity':1,
-              }).then((value) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text("Product successfully added to cart")));
-              });
-            },):Container()
+            widget.product['stock'] == true && widget.rool == "user"
+                ? CustomButton(
+                    btnTitle: "Add To Cart",
+                    onTap: () async {
+                      await FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(user!.email)
+                          .collection('cart')
+                          .doc()
+                          .set({
+                        'user_email': user!.email,
+                        'product_id': widget.product['id'],
+                        'name': widget.product['name'],
+                        'price': widget.product['price'],
+                        'image': widget.product['image'],
+                        'categories': widget.product['categories'],
+                        'variant': selectedVarience,
+                        'quantity': 1,
+                      }).then((value) {
+                        showTopSnackBar(
+                          Overlay.of(context),
+                          CustomSnackBar.success(
+                            message: "Product successfully added to cart",
+                          ),
+                        );
+                      });
+                    },
+                  )
+                : Container()
           ],
         ),
       ),

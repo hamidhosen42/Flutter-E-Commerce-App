@@ -8,3 +8,10 @@
 6. Home Screen : 
     1. Top Categories
     2.  Dress (id-2)
+
+
+10. Admin - product
+    1. Add
+    2. Update
+    3. Delete
+    4. Details

@@ -48,12 +48,14 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
   String? selectedValue;
   List<dynamic> selectedVariantItems = [];
+  String? selectedcategoriesValue;
 
   void changeSelectedValue() {
     setState(() {
       selectedVariantItems = widget.product['variant'];
       selectedValue =
           widget.product['stock'] == true ? 'Available in stock' : 'Stock Out';
+          selectedcategoriesValue=widget.product['categories'];
     });
   }
 
@@ -82,9 +84,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 key: _formState,
                 child: Column(
                   children: [
-                    SizedBox(
-                      height: 30.h,
-                    ),
                     CutomTextField(
                       controller: _nameController,
                       isRequired: true,
@@ -143,6 +142,75 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     ),
                     SizedBox(
                       height: 5.h,
+                    ),
+                    StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection('categories')
+                          .snapshots(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('Something went wrong');
+                        }
+
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        }
+
+                        return DropdownButtonFormField2<String>(
+                          isExpanded: true,
+                          decoration: InputDecoration(
+                              hintText: "Select Your Categories",
+                              filled: true,
+                              fillColor: AppColor.fieldBackgroundColor,
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent))),
+                          items: snapshot.data!.docs
+                              .map((item) => DropdownMenuItem<String>(
+                                    value: item['name'],
+                                    child: Text(
+                                      item['name'],
+                                      style: TextStyle(
+                                        fontSize: 14.sp,
+                                      ),
+                                    ),
+                                  ))
+                              .toList(),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "The Field is required";
+                            }
+                            return null;
+                          },
+                          value: selectedcategoriesValue,
+                          onChanged: (String? value) {
+                            setState(() {
+                              selectedcategoriesValue = value;
+                            });
+                          },
+                          iconStyleData: IconStyleData(
+                            icon: Icon(
+                              Icons.arrow_drop_down,
+                              color: Colors.black45,
+                            ),
+                            iconSize: 24.sp,
+                          ),
+                          dropdownStyleData: DropdownStyleData(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          menuItemStyleData: const MenuItemStyleData(
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                          ),
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      height: 10.h,
                     ),
                     DropdownButtonFormField2<String>(
                       isExpanded: true,
@@ -303,7 +371,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                 'description': _descriptionController.text,
                                 'stock':
                                     selectedValue == "Stock Out" ? false : true,
-                                'variant': selectedVariantItems.toList()
+                                'variant': selectedVariantItems.toList(),
+                                'categories':selectedcategoriesValue
                               }).then((value) {
                                 showTopSnackBar(
                                     Overlay.of(context),

@@ -1,12 +1,16 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce/admin/views/SeeAllCategories/see_all_screen.dart';
 import 'package:e_commerce/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
+import '../../../views/ProductDetaris/product_details.dart';
+import '../../../views/ProductsByCategory/pbc_screen.dart';
+import '../../../views/SeeAll/see_all_screen.dart';
 import '../../../widget/dashboard_button.dart';
 import '../EditProduct/edit_product.dart';
 
@@ -18,6 +22,7 @@ class AdminHomeScreen extends StatefulWidget {
 }
 
 class _AdminHomeScreenState extends State<AdminHomeScreen> {
+  final fireStore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,14 +123,15 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   width: 10.w,
                 ),
                 StreamBuilder(
-                  stream:
-                      FirebaseFirestore.instance.collection("banners").snapshots(),
+                  stream: FirebaseFirestore.instance
+                      .collection("banners")
+                      .snapshots(),
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (!snapshot.hasData) {
                       return Center(
                         child: CircularProgressIndicator(),
                       );
-                    }else {
+                    } else {
                       return InkWell(
                         onTap: () {
                           // Get.to(() => TourGuidePackageScreen());
@@ -149,6 +155,63 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
               color: AppColor.primaryColor,
               thickness: 2,
             ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Top Categories",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, fontSize: 16.sp),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => AdminSeeAllScreen()));
+                          },
+                          child: Text("See All",
+                              style: TextStyle(color: AppColor.primaryColor)),
+                        ),
+                      ],
+                    ),
+            SizedBox(
+              height: 5,
+            ),
+            StreamBuilder(
+                stream: fireStore.collection('categories').snapshots(),
+                builder: (_, snapshot) {
+                  final data = snapshot.data?.docs ?? [];
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: AppColor.primaryColor,
+                      ),
+                    );
+                  } else {
+                    return SizedBox(
+                      height: 70,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          primary: false,
+                          itemCount: data.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              margin: EdgeInsets.only(right: 15),
+                              width: 70,
+                              decoration: BoxDecoration(
+                                  color: Color(0xFFF2F2F2),
+                                  border:
+                                      Border.all(color: Color(0xFFD8D3D3)),
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Center(
+                                  child: Image.network(data[index]['icon']!)),
+                            );
+                          }),
+                    );
+                  }
+                }),
             Align(
               alignment: Alignment.bottomLeft,
               child: Text(
@@ -159,7 +222,8 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
             StreamBuilder(
               stream:
                   FirebaseFirestore.instance.collection("products").snapshots(),
-              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              builder: (context, snapshot) {
+                final productData = snapshot.data?.docs ?? [];
                 if (!snapshot.hasData) {
                   return Center(child: CircularProgressIndicator());
                 } else {
@@ -172,7 +236,15 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                           return Card(
                             color: AppColor.fieldBackgroundColor,
                             child: ListTile(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => ProductDetailsScreen(
+                                              product: productData[index],
+                                              rool: 'admin',
+                                            )));
+                              },
                               leading: data['image'] != null
                                   ? ClipRRect(
                                       borderRadius: BorderRadius.all(
@@ -202,7 +274,12 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                   PopupMenuItem(
                                     child: InkWell(
                                       onTap: () {
-                                       Navigator.push(context, MaterialPageRoute(builder: (_)=>EditProductScreen(product:data)));
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (_) =>
+                                                    EditProductScreen(
+                                                        product: data)));
                                       },
                                       child: Row(
                                         children: [
@@ -226,7 +303,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                               message:
                                                   "Successfully Product Delete",
                                             ));
-                                            Navigator.pop(context);
+                                        Navigator.pop(context);
                                       },
                                       child: Row(
                                         children: [
