@@ -22,7 +22,7 @@ class _AdminSeeAllScreenState extends State<AdminSeeAllScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context: context, title: "All Top Categories"),
+      appBar: customAppBar(context: context, title: "All Categories"),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: StreamBuilder(

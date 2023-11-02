@@ -354,7 +354,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     SizedBox(
                       height: 20.h,
                     ),
-                    // !=============== Add Product botton ===================
+                    // !=============== Edit Product botton ===================
                     CustomButton(
                         btnTitle: "Update Product",
                         onTap: () async {
