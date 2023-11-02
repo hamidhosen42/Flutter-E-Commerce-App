@@ -1,13 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce/widget/custom_appbar.dart';
+import 'package:e_commerce/admin/views/AddCategories/add_categories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../utils/colors.dart';
+import '../BottomBavBarView/bottom_view.dart';
 import '../EditCategories/edit_categories.dart';
 
 class AdminSeeAllScreen extends StatefulWidget {
@@ -22,7 +23,29 @@ class _AdminSeeAllScreenState extends State<AdminSeeAllScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context: context, title: "All Categories"),
+      appBar: AppBar(
+        title: Text("All Categories"),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => BottomBarAdminScreen()));
+            },
+            icon: Icon(Icons.arrow_back)),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 10.w),
+            child: IconButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => AddCategorieScreen()));
+                },
+                icon: Icon(Icons.add)),
+          )
+        ],
+      ),
+      // appBar: customAppBar(context: context, title: "All Categories",),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: StreamBuilder(

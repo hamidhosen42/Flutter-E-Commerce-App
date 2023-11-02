@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce/admin/views/Banner/banner_screen.dart';
 import 'package:e_commerce/admin/views/SeeAllCategories/see_all_screen.dart';
 import 'package:e_commerce/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +10,6 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../views/ProductDetaris/product_details.dart';
-import '../../../views/ProductsByCategory/pbc_screen.dart';
-import '../../../views/SeeAll/see_all_screen.dart';
 import '../../../widget/dashboard_button.dart';
 import '../EditProduct/edit_product.dart';
 
@@ -75,16 +74,11 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                         child: CircularProgressIndicator(),
                       );
                     } else {
-                      return InkWell(
-                        onTap: () {
-                          // Get.to(() => TourGuidePackageScreen());
-                        },
-                        child: dashboardButton(
-                          context: context,
-                          title: "Categories",
-                          quantity: snapshot.data!.docs.length.toString(),
-                          icon: "assets/images/direction.png",
-                        ),
+                      return dashboardButton(
+                        context: context,
+                        title: "Categories",
+                        quantity: snapshot.data!.docs.length.toString(),
+                        icon: "assets/images/direction.png",
                       );
                     }
                   },
@@ -107,14 +101,11 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                         child: CircularProgressIndicator(),
                       );
                     } else {
-                      return InkWell(
-                        onTap: () {},
-                        child: dashboardButton(
-                          context: context,
-                          title: "Users",
-                          quantity: snapshot.data!.docs.length.toString(),
-                          icon: "assets/images/users.png",
-                        ),
+                      return dashboardButton(
+                        context: context,
+                        title: "Users",
+                        quantity: snapshot.data!.docs.length.toString(),
+                        icon: "assets/images/users.png",
                       );
                     }
                   },
@@ -134,7 +125,10 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                     } else {
                       return InkWell(
                         onTap: () {
-                          // Get.to(() => TourGuidePackageScreen());
+                         Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => BannerScreen()));
                         },
                         child: dashboardButton(
                           context: context,

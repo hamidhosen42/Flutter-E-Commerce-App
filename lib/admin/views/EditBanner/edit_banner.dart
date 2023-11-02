@@ -9,34 +9,23 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../../helper/form_helper.dart';
 import '../../../widget/custom_appbar.dart';
 import '../../../widget/custom_button.dart';
+import '../Banner/banner_screen.dart';
 import '../SeeAllCategories/see_all_screen.dart';
 
-class EditCategories extends StatefulWidget {
-  final dynamic categories;
-  const EditCategories({required this.categories});
+class EditBanners extends StatefulWidget {
+  final dynamic banners;
+  const EditBanners({required this.banners});
 
   @override
-  State<EditCategories> createState() => _EditCategoriesState();
+  State<EditBanners> createState() => _EditBannersState();
 }
 
-class _EditCategoriesState extends State<EditCategories> {
+class _EditBannersState extends State<EditBanners> {
   var _imageController = TextEditingController();
-    final _nameController = TextEditingController();
-
-  String? selectedcategoriesValue;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _imageController.text = widget.categories['icon'];
-    _nameController.text = widget.categories['name'];
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context: context, title: "Update Categories"),
+      appBar: customAppBar(context: context, title: "Update banners"),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SingleChildScrollView(
@@ -44,14 +33,6 @@ class _EditCategoriesState extends State<EditCategories> {
             children: [
               SizedBox(
                 height: 100.h,
-              ),
-               CutomTextField(
-                        controller: _nameController,
-                        isRequired: true,
-                        hintText: "Categories Name",
-                      ),
-              SizedBox(
-                height: 10.h,
               ),
               CutomTextField(
                 controller: _imageController,
@@ -62,25 +43,24 @@ class _EditCategoriesState extends State<EditCategories> {
                 height: 30.h,
               ),
               CustomButton(
-                  btnTitle: "Update Categories",
+                  btnTitle: "Update Banner",
                   onTap: () async {
                    try {
                         final data = FirebaseFirestore.instance
-                            .collection("categories")
-                            .doc(widget.categories['id']);
+                            .collection("banners")
+                            .doc(widget.banners['id']);
                         await data.update({
-                          'icon': _imageController.text,
-                          'name': _nameController.text
+                          'image': _imageController.text,
                         }).then((value) {
                           showTopSnackBar(
                               Overlay.of(context),
                               CustomSnackBar.success(
-                                message: "Categories Update Successfully",
+                                message: "Banners Update Successfully",
                               ));
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (_) => AdminSeeAllScreen()));
+                                  builder: (_) => BannerScreen()));
                         });
                       } catch (e) {
                         showTopSnackBar(

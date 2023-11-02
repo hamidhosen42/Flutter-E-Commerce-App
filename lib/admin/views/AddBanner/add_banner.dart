@@ -9,20 +9,19 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../helper/form_helper.dart';
 import '../../../widget/custom_button.dart';
+import '../Banner/banner_screen.dart';
 
-class AddCategorieScreen extends StatefulWidget {
-  const AddCategorieScreen({super.key});
+class AddBannerScreen extends StatefulWidget {
+  const AddBannerScreen({super.key});
 
   @override
-  State<AddCategorieScreen> createState() => _AddCategorieScreenState();
+  State<AddBannerScreen> createState() => _AddBannerScreenState();
 }
 
-class _AddCategorieScreenState extends State<AddCategorieScreen> {
+class _AddBannerScreenState extends State<AddBannerScreen> {
   final _formState = GlobalKey<FormState>();
   final _auth = FirebaseAuth.instance;
   final fireStore = FirebaseFirestore.instance;
-
-  final _nameController = TextEditingController();
   final _imageController = TextEditingController();
 
   @override
@@ -30,7 +29,7 @@ class _AddCategorieScreenState extends State<AddCategorieScreen> {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            "Add Categories",
+            "Add Banner",
             style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
@@ -44,14 +43,6 @@ class _AddCategorieScreenState extends State<AddCategorieScreen> {
                   child: Column(
                     children: [
                       CutomTextField(
-                        controller: _nameController,
-                        isRequired: true,
-                        hintText: "Categories Name",
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      CutomTextField(
                         controller: _imageController,
                         isRequired: true,
                         hintText: "Image Link",
@@ -59,28 +50,28 @@ class _AddCategorieScreenState extends State<AddCategorieScreen> {
                       SizedBox(
                         height: 20.h,
                       ),
-                      // !=============== Add categories botton ===================
+                      // !=============== Add Banner botton ===================
                       CustomButton(
                           btnTitle: "Add Categorie",
                           onTap: () async {
                             if (_formState.currentState!.validate()) {
                               try {
                                 final data = FirebaseFirestore.instance
-                                    .collection("categories")
+                                    .collection("banners")
                                     .doc();
                                 await data.set({
                                   'id': data.id.toString(),
-                                  'name': _nameController.text,
-                                  'icon': _imageController.text,
+                                  'image': _imageController.text,
                                 }).then((value) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => BannerScreen()));
                                   showTopSnackBar(
                                       Overlay.of(context),
                                       CustomSnackBar.success(
-                                        message:
-                                            "Categories Added Successfully",
+                                        message: "Banner Added Successfully",
                                       ));
-
-                                  _nameController.clear();
                                   _imageController.clear();
                                 });
                               } catch (e) {

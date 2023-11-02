@@ -7,7 +7,6 @@ import 'package:e_commerce/widget/custom_appbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../controller/payment_controller.dart';
 import '../../widget/custom_button.dart';
 
 class CartScreen extends StatefulWidget {
