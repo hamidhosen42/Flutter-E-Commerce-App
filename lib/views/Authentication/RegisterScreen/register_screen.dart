@@ -13,6 +13,7 @@ import '../../../helper/form_helper.dart';
 import '../../../utils/colors.dart';
 import '../../../widget/custom_appbar.dart';
 import '../../../widget/custom_button.dart';
+import '../../BottomBavBarView/bottom_view.dart';
 import '../ForgotScreen/forgot_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -211,7 +212,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (_) =>
-                                                const HomeScreen()));
+                                                const BottomBarScreen()));
 
                                     showTopSnackBar(
                                       Overlay.of(context),

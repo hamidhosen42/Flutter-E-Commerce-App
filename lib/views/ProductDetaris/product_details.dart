@@ -32,7 +32,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     changeSelectedValue();
   }

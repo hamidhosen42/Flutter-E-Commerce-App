@@ -27,7 +27,6 @@ class _EditCategoriesState extends State<EditCategories> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _imageController.text = widget.categories['icon'];
     _nameController.text = widget.categories['name'];

@@ -45,7 +45,11 @@ dependencies:
   lottie: ^2.7.0
   dropdown_button2: ^2.3.9
   velocity_x: ^4.1.1
-  flutter_bkash: ^0.2.0
+  flutter_stripe: any
+  http: any
+  flutter_bkash: 
+  flutter_paystack: 
+
 
 dev_dependencies:
   flutter_test:

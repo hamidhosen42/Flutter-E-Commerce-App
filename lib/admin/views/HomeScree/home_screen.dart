@@ -4,11 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/admin/views/Banner/banner_screen.dart';
 import 'package:e_commerce/admin/views/SeeAllCategories/see_all_screen.dart';
 import 'package:e_commerce/utils/colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
+import '../../../views/Authentication/LoginScreen/login_screen.dart';
 import '../../../views/ProductDetaris/product_details.dart';
 import '../../../widget/dashboard_button.dart';
 import '../EditProduct/edit_product.dart';
@@ -30,6 +32,17 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
           "Dashboard",
           style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
         ),
+        actions: [
+        IconButton(
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (_) => LoginScreen()),
+                  (route) => false);
+            },
+            icon: Icon(Icons.logout))
+      ]
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10),

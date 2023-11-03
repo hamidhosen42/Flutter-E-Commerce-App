@@ -36,7 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getSlider();
   }
@@ -69,16 +68,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
-                    TextField(
-                      onChanged: (value)async{
-                        final data = await FirebaseFirestore.instance.collection("products").where('name',arrayContains: [value]).get();
+                    // TextField(
+                    //   onChanged: (value)async{
+                    //     final data = await FirebaseFirestore.instance.collection("products").where('name',arrayContains: [value]).get();
 
-                        if(data.docs.isEmpty)
-                        {
+                    //     if(data.docs.isEmpty)
+                    //     {
 
-                        }
-                      },
-                    ),
+                    //     }
+                    //   },
+                    // ),
                     StreamBuilder(
                         stream: fireStore
                             .collection('users')
@@ -247,7 +246,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             builder: (_) =>
                                                 ProductDetailsScreen(
                                                   product: data[index],
-                                                  rool: 'admin'
+                                                  rool: 'user'
                                                 )));
                                   },
                                   child: Container(

@@ -15,7 +15,12 @@
     2. Update
     3. Delete
     4. Details
-10. Admin - Categories
+11. Admin - Categories
+    1. Add
+    2. Update
+    3. Delete
+
+11. Admin - banners
     1. Add
     2. Update
     3. Delete

@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -49,21 +52,11 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCJE9gkzVwv9Tq6fo7ya4SNCWVqnI_6nNU',
-    appId: '1:758268943472:web:2ca4f2234ef8a5d82aa8b5',
-    messagingSenderId: '758268943472',
-    projectId: 'lwn-ecommerce-a2b84',
-    authDomain: 'lwn-ecommerce-a2b84.firebaseapp.com',
-    storageBucket: 'lwn-ecommerce-a2b84.appspot.com',
-    measurementId: 'G-EZRF2T50W6',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDtDathqm8BaOrPRd_titVIppGi7gxBDJg',
-    appId: '1:758268943472:android:1c2a9eb77bc1eea62aa8b5',
-    messagingSenderId: '758268943472',
-    projectId: 'lwn-ecommerce-a2b84',
-    storageBucket: 'lwn-ecommerce-a2b84.appspot.com',
+    apiKey: 'AIzaSyDe3AO0I03MfCsdzwL0Og7yCJYq2mP1JOs',
+    appId: '1:5634723291:android:92889f321627272cfbabfe',
+    messagingSenderId: '5634723291',
+    projectId: 'shopsavvy-fb9e3',
+    storageBucket: 'shopsavvy-fb9e3.appspot.com',
   );
 }

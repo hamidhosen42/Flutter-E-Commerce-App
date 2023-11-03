@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../widget/custom_button.dart';
+import 'package:flutter_bkash/flutter_bkash.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
