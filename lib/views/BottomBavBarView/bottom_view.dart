@@ -5,7 +5,8 @@ import 'package:e_commerce/views/HomeScreen/home_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../CartScreen/cart_screen.dart';
-import '../Favourite/favourite_screen.dart';
+import '../FavouriteScreen/favourite_screen.dart';
+import '../ProfileScreen/profile_screen.dart';
 
 class BottomBarScreen extends StatefulWidget {
   const BottomBarScreen({super.key});
@@ -20,7 +21,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
     HomeScreen(),
     FavouriteScreen(),
     CartScreen(),
-    HomeScreen(),
+    ProfileScreen(),
   ];
   @override
   Widget build(BuildContext context) {

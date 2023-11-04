@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'theme/theme_manager.dart';
 import 'views/SplashScreen/splash_screen.dart';
 
 void main() async {
@@ -9,6 +10,8 @@ void main() async {
   await Firebase.initializeApp();
   runApp(const MyApp());
 }
+
+ThemeManager themeManager = ThemeManager(ThemeMode.light);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

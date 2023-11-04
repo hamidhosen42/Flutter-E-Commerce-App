@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, prefer_is_empty
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, prefer_is_empty, use_build_context_synchronously
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -44,8 +44,6 @@ class _HomeScreenState extends State<HomeScreen> {
         .collection("place")
         .doc();
 
-    // String id = DateTime.now().microsecondsSinceEpoch.toString();
-
     ref.set({
       'id': data1!['id'],
       'name': data1['name'],
@@ -72,8 +70,8 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar:
           customAppBar(context: context, isLeading: Icon(Icons.menu), action: [
         IconButton(
-            onPressed: () {
-              FirebaseAuth.instance.signOut();
+            onPressed: () async{
+              await FirebaseAuth.instance.signOut();
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (_) => LoginScreen()),
@@ -372,7 +370,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ],
                                         ),
                                         Container(
-                                          height: 80.h,
+                                          height: 85.h,
                                           width: double.infinity,
                                           decoration: BoxDecoration(
                                               image: DecorationImage(

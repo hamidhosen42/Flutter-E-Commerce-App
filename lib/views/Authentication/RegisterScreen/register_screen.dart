@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:e_commerce/views/Authentication/LoginScreen/login_screen.dart';
-import 'package:e_commerce/views/HomeScreen/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,7 +11,6 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../helper/form_helper.dart';
 import '../../../utils/colors.dart';
-import '../../../widget/custom_appbar.dart';
 import '../../../widget/custom_button.dart';
 import '../../BottomBavBarView/bottom_view.dart';
 import '../ForgotScreen/forgot_screen.dart';
@@ -35,10 +34,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool isPasswordSecured = true;
   bool isConfirmPasswordSecured = true;
 
+  final List<String> items = [
+    'Barishal',
+    'Chattogram',
+    'Dhaka',
+    'Khulna',
+    'Rajshahi',
+    'Rangpur',
+    'Mymensingh',
+    'Sylhet',
+  ];
+  String? selectedValue;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context: context),
       body: Center(
         child: Padding(
           padding: EdgeInsets.all(20),
@@ -46,6 +56,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                SizedBox(
+                  height: 25.h,
+                ),
                 Column(
                   children: [
                     Text(
@@ -57,7 +70,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
-                      height: 20.h,
+                      height: 10.h,
                     ),
                     Text(
                       "Create an account so you can explore all the\nexisting jobs",
@@ -70,7 +83,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ],
                 ),
                 SizedBox(
-                  height: 40.h,
+                  height: 30.h,
                 ),
                 Form(
                   key: _formState,
@@ -87,6 +100,58 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           controller: _emailController,
                           hintText: "Email",
                           isRequired: true),
+                      SizedBox(
+                        height: 15.h,
+                      ),
+                      DropdownButtonFormField2<String>(
+                        isExpanded: true,
+                        decoration: InputDecoration(
+                            hintText: "Bangladesh District",
+                            filled: true,
+                            fillColor: AppColor.fieldBackgroundColor,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide:
+                                    BorderSide(color: Colors.transparent))),
+                        items: items
+                            .map((item) => DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Text(
+                                    item,
+                                    style: TextStyle(
+                                      fontSize: 14.sp,
+                                    ),
+                                  ),
+                                ))
+                            .toList(),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "The Field is required";
+                          }
+                          return null;
+                        },
+                        value: selectedValue,
+                        onChanged: (String? value) {
+                          setState(() {
+                            selectedValue = value;
+                          });
+                        },
+                        iconStyleData: IconStyleData(
+                          icon: Icon(
+                            Icons.arrow_drop_down,
+                            color: Colors.black45,
+                          ),
+                          iconSize: 24.sp,
+                        ),
+                        dropdownStyleData: DropdownStyleData(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        menuItemStyleData: const MenuItemStyleData(
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                        ),
+                      ),
                       SizedBox(
                         height: 15.h,
                       ),
@@ -184,13 +249,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     'email': _emailController.text,
                                     'name': _nameController.text,
                                     'uid':
-                                        FirebaseAuth.instance.currentUser!.uid
+                                        FirebaseAuth.instance.currentUser!.uid,
+                                          "address": selectedValue.toString(),
+                                    "image": "",
                                   }).then((value) {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (_) =>
-                                                const HomeScreen()));
+                                                const BottomBarScreen()));
 
                                     showTopSnackBar(
                                         Overlay.of(context),
@@ -206,7 +273,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     'email': _emailController.text,
                                     'name': _nameController.text,
                                     'uid':
-                                        FirebaseAuth.instance.currentUser!.uid
+                                        FirebaseAuth.instance.currentUser!.uid,
+                                    "address": selectedValue.toString(),
+                                    "image": "",
                                   }).then((value) {
                                     Navigator.push(
                                         context,
