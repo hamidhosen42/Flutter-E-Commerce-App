@@ -5,6 +5,7 @@ import 'package:e_commerce/views/HomeScreen/home_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../CartScreen/cart_screen.dart';
+import '../Favourite/favourite_screen.dart';
 
 class BottomBarScreen extends StatefulWidget {
   const BottomBarScreen({super.key});
@@ -17,7 +18,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
   int selectedIndex = 0;
   List<Widget> screen = [
     HomeScreen(),
-    HomeScreen(),
+    FavouriteScreen(),
     CartScreen(),
     HomeScreen(),
   ];

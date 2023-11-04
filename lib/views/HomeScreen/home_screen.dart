@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, prefer_is_empty
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,6 +7,8 @@ import 'package:e_commerce/widget/custom_appbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../Authentication/LoginScreen/login_screen.dart';
 import '../ProductDetaris/product_details.dart';
@@ -32,6 +34,30 @@ class _HomeScreenState extends State<HomeScreen> {
         firebaseSliders = data.docs;
       });
     });
+  }
+
+  Future addToFavourite(
+      QueryDocumentSnapshot<Map<String, dynamic>>? data1) async {
+    var ref = FirebaseFirestore.instance
+        .collection("users-favourite-items")
+        .doc(FirebaseAuth.instance.currentUser!.email)
+        .collection("place")
+        .doc();
+
+    // String id = DateTime.now().microsecondsSinceEpoch.toString();
+
+    ref.set({
+      'id': data1!['id'],
+      'name': data1['name'],
+      'image': data1['image'],
+      'price': data1['price'],
+      'categories': data1['categories'],
+    }).then((value) => showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.success(
+            message: "Added to favourite place",
+          ),
+        ));
   }
 
   @override
@@ -67,7 +93,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
                     // TextField(
                     //   onChanged: (value)async{
                     //     final data = await FirebaseFirestore.instance.collection("products").where('name',arrayContains: [value]).get();
@@ -234,10 +259,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 2,
-                                      childAspectRatio: 0.8,
+                                      childAspectRatio: 0.7,
                                       crossAxisSpacing: 15,
                                       mainAxisSpacing: 15),
                               itemBuilder: (context, index) {
+                                final data1 = snapshot.data?.docs[index];
                                 return InkWell(
                                   onTap: () {
                                     Navigator.push(
@@ -245,9 +271,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         MaterialPageRoute(
                                             builder: (_) =>
                                                 ProductDetailsScreen(
-                                                  product: data[index],
-                                                  rool: 'user'
-                                                )));
+                                                    product: data[index],
+                                                    rool: 'user')));
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(
@@ -266,8 +291,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               padding: const EdgeInsets.only(
                                                   left: 10),
                                               child: Container(
-                                                height: 30,
-                                                width: 80,
+                                                height: 20.h,
+                                                width: 50.w,
                                                 decoration: BoxDecoration(
                                                     color: Colors.white,
                                                     borderRadius:
@@ -278,21 +303,76 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   '${data[index]['discount']}%OFF',
                                                   style: TextStyle(
                                                       fontWeight:
-                                                          FontWeight.bold),
+                                                          FontWeight.bold,fontSize: 12.sp ),
                                                 )),
                                               ),
                                             ),
-                                            IconButton(
-                                                onPressed: () {},
-                                                icon: Icon(
-                                                  Icons.favorite_outline,
-                                                  color: Colors.black
-                                                      .withOpacity(0.5),
-                                                ))
+                                            StreamBuilder(
+                                                stream: fireStore
+                                                    .collection(
+                                                        'users-favourite-items')
+                                                    .doc(FirebaseAuth.instance
+                                                        .currentUser!.email)
+                                                    .collection("place")
+                                                    .where("id",
+                                                        isEqualTo: data1!['id'])
+                                                    .snapshots(),
+                                                builder: (_, snapshot) {
+                                                  if (snapshot.data == null) {
+                                                    return Center(
+                                                        child: Text(
+                                                            'Place is Empty'));
+                                                  }
+                                                  if (snapshot.hasError) {
+                                                    return Center(
+                                                        child: Text(
+                                                            'Something went wrong'));
+                                                  }
+                                                  if (snapshot
+                                                          .connectionState ==
+                                                      ConnectionState.waiting) {
+                                                    return Center(
+                                                        child:
+                                                            CircularProgressIndicator());
+                                                  }
+                                                  return IconButton(
+                                                      icon: snapshot.data!.docs
+                                                                  .length ==
+                                                              0
+                                                          ? Icon(
+                                                              Icons
+                                                                  .favorite_border,
+                                                              size: 20.sp,
+                                                              color:
+                                                                  Colors.black,
+                                                            )
+                                                          : Icon(
+                                                              Icons
+                                                                  .favorite_border,
+                                                              size: 20.sp,
+                                                              color: Colors.red,
+                                                            ),
+                                                      onPressed: () => snapshot
+                                                                  .data!
+                                                                  .docs
+                                                                  .length ==
+                                                              0
+                                                          ? addToFavourite(
+                                                              data1)
+                                                          : showTopSnackBar(
+                                                              Overlay.of(
+                                                                  context),
+                                                              CustomSnackBar
+                                                                  .error(
+                                                                message:
+                                                                    "Already Added",
+                                                              ),
+                                                            ));
+                                                }),
                                           ],
                                         ),
                                         Container(
-                                          height: 100,
+                                          height: 80.h,
                                           width: double.infinity,
                                           decoration: BoxDecoration(
                                               image: DecorationImage(
@@ -313,16 +393,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 data[index]['name'],
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.w500,
-                                                    fontSize: 15),
+                                                    fontSize: 14.sp),
                                               ),
                                               SizedBox(
-                                                height: 5,
+                                                height: 5.h,
                                               ),
                                               Text(
                                                 "\$${data[index]['price']}",
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
-                                                    fontSize: 18),
+                                                    fontSize: 16.sp),
                                               ),
                                             ],
                                           ),
