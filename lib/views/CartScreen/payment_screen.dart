@@ -12,6 +12,8 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:flutter_bkash/flutter_bkash.dart';
 
+import '../../main.dart';
+import '../../utils/colors.dart';
 import 'success_payment.dart';
 
 enum Intent { sale, authorization }
@@ -47,8 +49,18 @@ class _PaymentGetewayScreenState extends State<PaymentGetewayScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final color =
+        themeManager.themeMode == ThemeMode.light ? Colors.black : Colors.white;
     return Scaffold(
-      appBar: customAppBar(context: context, title: 'Payment Method'),
+      backgroundColor: themeManager.themeMode == ThemeMode.light
+          ? Colors.white
+          : Colors.black,
+      appBar: customAppBar(
+          context: context,
+          title: 'Payment Method',
+          backgroundColor: themeManager.themeMode == ThemeMode.light
+              ? Colors.white
+              : Colors.black),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(children: [
@@ -175,15 +187,20 @@ class _PaymentGetewayScreenState extends State<PaymentGetewayScreen> {
                       )));
             },
             child: Card(
+              color: themeManager.themeMode == ThemeMode.light
+                  ? AppColor.fieldBackgroundColor
+                  : Colors.grey[900],
               child: ListTile(
                 title: Text(
                   "bKash",
-                  style:
-                      TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.sp,
+                      color: color),
                 ),
                 trailing: Text(
                   "\$${widget.totalAmount.toString()}",
-                  style: TextStyle(fontSize: 16.sp),
+                  style: TextStyle(fontSize: 16.sp, color: color),
                 ),
               ),
             ),
@@ -226,15 +243,20 @@ class _PaymentGetewayScreenState extends State<PaymentGetewayScreen> {
               );
             },
             child: Card(
+              color: themeManager.themeMode == ThemeMode.light
+                  ? AppColor.fieldBackgroundColor
+                  : Colors.grey[900],
               child: ListTile(
                 title: Text(
                   "Cash on Delivery",
-                  style:
-                      TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.sp,
+                      color: color),
                 ),
                 trailing: Text(
                   "\$${widget.totalAmount.toString()}",
-                  style: TextStyle(fontSize: 16.sp),
+                  style: TextStyle(fontSize: 16.sp, color: color),
                 ),
               ),
             ),

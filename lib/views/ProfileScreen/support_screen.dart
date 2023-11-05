@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../main.dart';
-import '../../utils/colors.dart';
 import '../../widget/support_field.dart';
 
 class SupportScreen extends StatelessWidget {
@@ -14,15 +13,15 @@ class SupportScreen extends StatelessWidget {
     final color =
         themeManager.themeMode == ThemeMode.light ? Colors.black : Colors.white;
     return Scaffold(
-        backgroundColor: themeManager.themeMode == ThemeMode.light
-            ? AppColor.fieldBackgroundColor
-            : Colors.black87,
-        appBar: customAppBar(
-            context: context,
-            title: "Support Screen",
-            backgroundColor: themeManager.themeMode == ThemeMode.light
-                ? AppColor.fieldBackgroundColor
-                : Colors.black12),
+      backgroundColor: themeManager.themeMode == ThemeMode.light
+          ? Colors.white
+          : Colors.black87,
+      appBar: customAppBar(
+          context: context,
+          title: "Support Screen",
+          backgroundColor: themeManager.themeMode == ThemeMode.light
+              ? Colors.white
+              : Colors.black12),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         physics: BouncingScrollPhysics(),
@@ -40,10 +39,7 @@ class SupportScreen extends StatelessWidget {
               ),
               Text(
                 "If you have any problems , please contact us . We are at your service all the time.",
-                style: TextStyle(
-                  fontSize: 20.sp,
-                  color: color
-                ),
+                style: TextStyle(fontSize: 20.sp, color: color),
               ),
               Divider(
                 color: color,

@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../main.dart';
-import '../../utils/colors.dart';
 import '../../utils/config.dart';
 
 class PrivacyScreen extends StatelessWidget {
@@ -16,13 +15,13 @@ class PrivacyScreen extends StatelessWidget {
         themeManager.themeMode == ThemeMode.light ? Colors.black : Colors.white;
     return Scaffold(
       backgroundColor: themeManager.themeMode == ThemeMode.light
-          ? AppColor.fieldBackgroundColor
+          ? Colors.white
           : Colors.black87,
       appBar: customAppBar(
           context: context,
           title: "Privacy Policy Screen",
           backgroundColor: themeManager.themeMode == ThemeMode.light
-              ? AppColor.fieldBackgroundColor
+              ? Colors.white
               : Colors.black12),
       body: Padding(
         padding: EdgeInsets.all(18.h),

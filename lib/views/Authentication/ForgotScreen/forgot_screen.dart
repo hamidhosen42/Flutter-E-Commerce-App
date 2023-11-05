@@ -8,6 +8,7 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../helper/form_helper.dart';
+import '../../../main.dart';
 import '../../../utils/colors.dart';
 import '../../../widget/custom_button.dart';
 
@@ -29,8 +30,15 @@ class _ForgotScreenState extends State<ForgotScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    final color =
+        themeManager.themeMode == ThemeMode.light ? Colors.black : Colors.white;
     return Scaffold(
-      appBar: customAppBar(context: context),
+        backgroundColor: themeManager.themeMode == ThemeMode.light
+            ? Colors.white
+            : Colors.black,
+            appBar: customAppBar(context: context, backgroundColor: themeManager.themeMode == ThemeMode.light
+            ? Colors.white
+            : Colors.black,),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: SingleChildScrollView(
@@ -38,11 +46,14 @@ class _ForgotScreenState extends State<ForgotScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              SizedBox(
+                height: 20.h,
+              ),
               Text(
                 "Forgot here",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    color: AppColor.primaryColor,
+                   color: themeManager.themeMode == ThemeMode.light? AppColor.primaryColor:Colors.white,
                     fontSize: 30.sp,
                     fontWeight: FontWeight.bold),
               ),
@@ -108,6 +119,7 @@ class _ForgotScreenState extends State<ForgotScreen> {
                 child: Text(
                   'If you need to reset your password, please follow the steps below:\n1. Enter your email address associated with your account.\n2. Check your email for a password reset link. Make sure to check your spam folder if you dont see it in your inbox.\n3. Click on the password reset link and follow the instructions to create a new password.\n4. Once you have created a new password, you should be able to log in to your account with your new password.',
                   textAlign: TextAlign.justify,
+                  style: TextStyle(color: color),
                 ),
               ),
             ],

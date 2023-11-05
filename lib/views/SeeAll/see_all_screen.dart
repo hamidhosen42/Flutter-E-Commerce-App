@@ -5,6 +5,7 @@ import 'package:e_commerce/widget/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../main.dart';
 import '../../utils/colors.dart';
 import '../ProductsByCategory/pbc_screen.dart';
 
@@ -20,7 +21,12 @@ class _SeeAllScreenState extends State<SeeAllScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context: context, title: "All Top Categories"),
+        backgroundColor: themeManager.themeMode == ThemeMode.light
+            ? Colors.white
+            : Colors.black,
+      appBar: customAppBar(context: context, title: "All Top Categories",            backgroundColor: themeManager.themeMode == ThemeMode.light
+            ? Colors.white
+            : Colors.black,),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
         child: StreamBuilder(

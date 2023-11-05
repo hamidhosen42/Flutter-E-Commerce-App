@@ -10,6 +10,7 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../helper/form_helper.dart';
+import '../../../main.dart';
 import '../../../utils/colors.dart';
 import '../../../widget/custom_button.dart';
 import '../../BottomBavBarView/bottom_view.dart';
@@ -48,7 +49,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final color =
+        themeManager.themeMode == ThemeMode.light ? Colors.black : Colors.white;
     return Scaffold(
+      backgroundColor: themeManager.themeMode == ThemeMode.light
+          ? Colors.white
+          : Colors.black,
       body: Center(
         child: Padding(
           padding: EdgeInsets.all(20),
@@ -65,7 +71,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       "Create Account",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: AppColor.primaryColor,
+                          color: themeManager.themeMode == ThemeMode.light
+                              ? AppColor.primaryColor
+                              : Colors.white,
                           fontSize: 30.sp,
                           fontWeight: FontWeight.bold),
                     ),
@@ -76,7 +84,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       "Create an account so you can explore all the\nexisting jobs",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: Colors.black,
+                          color: color,
                           fontSize: 14.sp,
                           fontWeight: FontWeight.normal),
                     ),
@@ -107,12 +115,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         isExpanded: true,
                         decoration: InputDecoration(
                             hintText: "Bangladesh District",
+                            hintStyle: TextStyle(color: color),
                             filled: true,
-                            fillColor: AppColor.fieldBackgroundColor,
+                            fillColor: themeManager.themeMode == ThemeMode.light
+                                ? AppColor.fieldBackgroundColor
+                                : Colors.black,
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
-                                borderSide:
-                                    BorderSide(color: Colors.transparent))),
+                                borderSide: BorderSide(
+                                    color: themeManager.themeMode ==
+                                            ThemeMode.light
+                                        ? Colors.transparent
+                                        : Colors.white))),
                         items: items
                             .map((item) => DropdownMenuItem<String>(
                                   value: item,
@@ -120,6 +134,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     item,
                                     style: TextStyle(
                                       fontSize: 14.sp,
+                                      // color: color
                                     ),
                                   ),
                                 ))
@@ -139,7 +154,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         iconStyleData: IconStyleData(
                           icon: Icon(
                             Icons.arrow_drop_down,
-                            color: Colors.black45,
+                            color: themeManager.themeMode == ThemeMode.light
+                                ? Colors.black45
+                                : Colors.white,
                           ),
                           iconSize: 24.sp,
                         ),
@@ -205,7 +222,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             child: Text(
                               "Forgot your password",
                               style: TextStyle(
-                                  color: AppColor.primaryColor,
+                                  color:
+                                      themeManager.themeMode == ThemeMode.light
+                                          ? AppColor.primaryColor
+                                          : Colors.white,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500),
                             ),
@@ -250,7 +270,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     'name': _nameController.text,
                                     'uid':
                                         FirebaseAuth.instance.currentUser!.uid,
-                                          "address": selectedValue.toString(),
+                                    "address": selectedValue.toString(),
                                     "image": "",
                                   }).then((value) {
                                     Navigator.push(
@@ -314,7 +334,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: Text(
                           "Already have an account",
                           style: TextStyle(
-                              fontSize: 14.sp, fontWeight: FontWeight.w600),
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w600,
+                              color: color),
                         ),
                       ),
                     ],

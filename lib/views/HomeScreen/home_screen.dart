@@ -10,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
+import '../../main.dart';
 import '../Authentication/LoginScreen/login_screen.dart';
 import '../ProductDetaris/product_details.dart';
 import '../ProductsByCategory/pbc_screen.dart';
@@ -66,19 +67,33 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final color =
+        themeManager.themeMode == ThemeMode.light ? Colors.black : Colors.white;
     return Scaffold(
-      appBar:
-          customAppBar(context: context, isLeading: Icon(Icons.menu), action: [
-        IconButton(
-            onPressed: () async{
-              await FirebaseAuth.instance.signOut();
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (_) => LoginScreen()),
-                  (route) => false);
-            },
-            icon: Icon(Icons.logout))
-      ]),
+      backgroundColor: themeManager.themeMode == ThemeMode.light
+          ? Colors.white
+          : Colors.black,
+      appBar: customAppBar(
+          context: context,
+           backgroundColor: themeManager.themeMode == ThemeMode.light
+            ? Colors.white
+            : Colors.black,
+          isLeading: Icon(
+            Icons.menu,
+            color: color,
+          ),
+          action: [
+            IconButton(
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (_) => LoginScreen()),
+                    (route) => false);
+              },
+              icon: Icon(Icons.logout),
+            )
+          ]),
       body: firebaseSliders.isEmpty
           ? Center(
               child: CircularProgressIndicator(
@@ -91,16 +106,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // TextField(
-                    //   onChanged: (value)async{
-                    //     final data = await FirebaseFirestore.instance.collection("products").where('name',arrayContains: [value]).get();
-
-                    //     if(data.docs.isEmpty)
-                    //     {
-
-                    //     }
-                    //   },
-                    // ),
                     StreamBuilder(
                         stream: fireStore
                             .collection('users')
@@ -112,25 +117,25 @@ class _HomeScreenState extends State<HomeScreen> {
                               ConnectionState.waiting) {
                             return Center(
                               child: CircularProgressIndicator(
-                                color: AppColor.primaryColor,
+                                color:themeManager.themeMode == ThemeMode.light ?AppColor.primaryColor:Colors.white,
                               ),
                             );
                           } else {
                             return Text(
                               "Hello ${data!['name']} 👋",
                               style: TextStyle(
-                                  fontWeight: FontWeight.w800, fontSize: 16.sp),
+                                  fontWeight: FontWeight.w800, fontSize: 16.sp,color: color),
                             );
                           }
                         }),
                     Text(
                       "Let’s start shopping!",
-                      style: TextStyle(color: Colors.black.withOpacity(0.5)),
+                      style: TextStyle(color: themeManager.themeMode == ThemeMode.light ?Colors.black.withOpacity(0.5):Colors.grey[400]),
                     ),
                     firebaseSliders.isEmpty
                         ? Center(
                             child: CircularProgressIndicator(
-                              color: AppColor.primaryColor,
+                              color:themeManager.themeMode == ThemeMode.light ?AppColor.primaryColor:Colors.white,
                             ),
                           )
                         : Container(
@@ -162,7 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Text(
                           "Top Categories",
                           style: TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 16.sp),
+                              fontWeight: FontWeight.w600, fontSize: 16.sp,color: color),
                         ),
                         TextButton(
                           onPressed: () {
@@ -172,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     builder: (_) => SeeAllScreen()));
                           },
                           child: Text("See All",
-                              style: TextStyle(color: AppColor.primaryColor)),
+                              style: TextStyle( color:themeManager.themeMode == ThemeMode.light ?AppColor.primaryColor:Colors.white,)),
                         ),
                       ],
                     ),
@@ -187,7 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ConnectionState.waiting) {
                             return Center(
                               child: CircularProgressIndicator(
-                                color: AppColor.primaryColor,
+                                 color:themeManager.themeMode == ThemeMode.light ?AppColor.primaryColor:Colors.white,
                               ),
                             );
                           } else {
@@ -213,9 +218,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                         margin: EdgeInsets.only(right: 15),
                                         width: 70,
                                         decoration: BoxDecoration(
-                                            color: Color(0xFFF2F2F2),
+                                            color: themeManager.themeMode == ThemeMode.light ?Color(0xFFF2F2F2):Colors.grey[900],
                                             border: Border.all(
-                                                color: Color(0xFFD8D3D3)),
+                                                color: Color(0xFFD8D3D3)
+                                                
+                                                ),
                                             borderRadius:
                                                 BorderRadius.circular(10)),
                                         child: Center(
@@ -233,7 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Text(
                       "Recent Products",
                       style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                          TextStyle(fontWeight: FontWeight.w600, fontSize: 18.sp,color: color),
                     ),
                     SizedBox(
                       height: 10,
@@ -246,7 +253,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ConnectionState.waiting) {
                           return Center(
                             child: CircularProgressIndicator(
-                              color: AppColor.primaryColor,
+                               color:themeManager.themeMode == ThemeMode.light ?AppColor.primaryColor:Colors.white,
                             ),
                           );
                         } else {
@@ -274,7 +281,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(
-                                        color: Color(0xFFF2F2F2),
+                                       color: themeManager.themeMode == ThemeMode.light ?Color(0xFFF2F2F2):Colors.grey[900],
                                         borderRadius:
                                             BorderRadius.circular(15)),
                                     child: Column(
@@ -295,13 +302,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     color: Colors.white,
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            15)),
+                                                            10)),
                                                 child: Center(
                                                     child: Text(
                                                   '${data[index]['discount']}%OFF',
                                                   style: TextStyle(
                                                       fontWeight:
-                                                          FontWeight.bold,fontSize: 12.sp ),
+                                                          FontWeight.bold,
+                                                      fontSize: 12.sp),
                                                 )),
                                               ),
                                             ),
@@ -342,7 +350,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   .favorite_border,
                                                               size: 20.sp,
                                                               color:
-                                                                  Colors.black,
+                                                                  color,
                                                             )
                                                           : Icon(
                                                               Icons
@@ -370,7 +378,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ],
                                         ),
                                         Container(
-                                          height: 85.h,
+                                          height: 80.h,
                                           width: double.infinity,
                                           decoration: BoxDecoration(
                                               image: DecorationImage(
@@ -391,7 +399,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 data[index]['name'],
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.w500,
-                                                    fontSize: 14.sp),
+                                                    fontSize: 14.sp,color: color),
                                               ),
                                               SizedBox(
                                                 height: 5.h,
@@ -400,7 +408,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 "\$${data[index]['price']}",
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
-                                                    fontSize: 16.sp),
+                                                    fontSize: 16.sp,color: color),
                                               ),
                                             ],
                                           ),

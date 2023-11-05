@@ -7,6 +7,7 @@ import 'package:e_commerce/widget/custom_appbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../main.dart';
 import '../../widget/custom_button.dart';
 
 class CartScreen extends StatefulWidget {
@@ -19,7 +20,6 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   final user = FirebaseAuth.instance.currentUser;
   List<QueryDocumentSnapshot> cartItem = [];
-  // var obj = PaymentController();
 
   double totalAmount = 0.0;
 
@@ -44,6 +44,8 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final color =
+        themeManager.themeMode == ThemeMode.light ? Colors.black : Colors.white;
     return StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection("users")
@@ -60,7 +62,16 @@ class _CartScreenState extends State<CartScreen> {
             );
           } else {
             return Scaffold(
-                appBar: customAppBar(context: context, title: "My Cart"),
+                backgroundColor: themeManager.themeMode == ThemeMode.light
+                    ? AppColor.fieldBackgroundColor
+                    : Colors.black,
+                appBar: customAppBar(
+                  context: context,
+                  title: "My Cart",
+                  backgroundColor: themeManager.themeMode == ThemeMode.light
+                      ? AppColor.fieldBackgroundColor
+                      : Colors.black,
+                ),
                 body: ListView.builder(
                     itemCount: snapshot.data!.docs.length,
                     itemBuilder: (context, index) {
@@ -71,7 +82,9 @@ class _CartScreenState extends State<CartScreen> {
                         child: Container(
                             height: 70.h,
                             decoration: BoxDecoration(
-                                color: Color(0xFFF8F8F8),
+                                color: themeManager.themeMode == ThemeMode.light
+                                    ? AppColor.fieldBackgroundColor
+                                    : Colors.grey[900],
                                 borderRadius: BorderRadius.circular(20)),
                             child: Padding(
                               padding:
@@ -87,7 +100,7 @@ class _CartScreenState extends State<CartScreen> {
                                     height: 60.h,
                                     width: 80.w,
                                     decoration: BoxDecoration(
-                                        color: Colors.white,
+                                        color: color,
                                         borderRadius:
                                             BorderRadius.circular(15)),
                                   ),
@@ -101,14 +114,14 @@ class _CartScreenState extends State<CartScreen> {
                                         data['name'],
                                         style: TextStyle(
                                             fontWeight: FontWeight.w500,
+                                            color: color,
                                             fontSize: 14.sp),
                                       ),
                                       Text(
                                         "\$${data['price']}",
                                         style: TextStyle(
                                             fontSize: 12.sp,
-                                            color:
-                                                Colors.black.withOpacity(0.5),
+                                            color: color,
                                             fontWeight: FontWeight.bold),
                                       )
                                     ],
@@ -121,9 +134,7 @@ class _CartScreenState extends State<CartScreen> {
                                     children: [
                                       Text(
                                         "Size: ${data['variant']!}",
-                                        style: TextStyle(
-                                            color:
-                                                Colors.black.withOpacity(0.5)),
+                                        style: TextStyle(color: color),
                                       ),
                                       Container(
                                         decoration: BoxDecoration(
@@ -198,102 +209,113 @@ class _CartScreenState extends State<CartScreen> {
                             )),
                       );
                     }),
-                bottomNavigationBar: Container(
-                  height: 120,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.01),
-                      borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(15),
-                          topLeft: Radius.circular(15))),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Total",
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w800),
-                            ),
-                            Text(
-                              "\$${totalAmount}",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: AppColor.primaryColor,
-                                  fontWeight: FontWeight.w800),
-                            )
-                          ],
+                bottomNavigationBar: snapshot.data!.docs.length != 0
+                    ? Container(
+                        height: 120,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            color: themeManager.themeMode == ThemeMode.light
+                                ? Colors.black.withOpacity(0.01)
+                                : Colors.black,
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(15),
+                                topLeft: Radius.circular(15))),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Total",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w800,
+                                        color: color),
+                                  ),
+                                  Text(
+                                    "\$${totalAmount}",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: themeManager.themeMode ==
+                                                ThemeMode.light
+                                            ? AppColor.primaryColor
+                                            : Colors.white,
+                                        fontWeight: FontWeight.w800),
+                                  )
+                                ],
+                              ),
+                              CustomButton(
+                                btnTitle: "Buy Now",
+                                onTap: () async {
+                                  List<Map<String, dynamic>> cardData = cartItem
+                                      .map((item) =>
+                                          item.data() as Map<String, dynamic>)
+                                      .toList();
+
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              PaymentGetewayScreen(
+                                                  cardData: cardData,
+                                                  totalAmount: totalAmount)));
+                                  // try {
+                                  //   if (result.trxId.isNotEmpty) {
+
+                                  //                                       final result = await bkash.pay(
+                                  //       context: context,
+                                  //       amount: totalAmount,
+                                  //       merchantInvoiceNumber: "invoice123");
+                                  //     FirebaseFirestore.instance
+                                  //         .collection("orders")
+                                  //         .add({
+                                  //       'email': user!.email,
+                                  //       'time': result.executeTime,
+                                  //       'item': cardData,
+                                  //       'trxId': result.trxId,
+                                  //       'paymentId': result.paymentId,
+                                  //       'merchantInvoiceNumber':
+                                  //           result.merchantInvoiceNumber,
+                                  //       'customerMsisdn': result.customerMsisdn,
+                                  //     }).then((value) async {
+                                  //       final cart = await FirebaseFirestore.instance
+                                  //           .collection("users")
+                                  //           .doc(user!.email)
+                                  //           .collection('cart')
+                                  //           .get();
+
+                                  //       for (var item in cart.docs) {
+                                  //         await item.reference.delete();
+                                  //       }
+                                  //     });
+                                  //   }
+
+                                  //   showTopSnackBar(
+                                  //     Overlay.of(context),
+                                  //     CustomSnackBar.success(
+                                  //       message:
+                                  //           'Payment Successfull. Your Transaction ID is: ${result.trxId}',
+                                  //     ),
+                                  //   );
+                                  // } on BkashFailure catch (e) {
+                                  //   showTopSnackBar(
+                                  //     Overlay.of(context),
+                                  //     CustomSnackBar.error(
+                                  //       message: e.toString(),
+                                  //     ),
+                                  //   );
+                                  // }
+                                },
+                              )
+                            ],
+                          ),
                         ),
-                        CustomButton(
-                          btnTitle: "Buy Now",
-                          onTap: () async {
-                            List<Map<String, dynamic>> cardData = cartItem
-                                .map((item) =>
-                                    item.data() as Map<String, dynamic>)
-                                .toList();
-
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => PaymentGetewayScreen(
-                                        cardData: cardData,
-                                        totalAmount: totalAmount)));
-                            // try {
-                            //   if (result.trxId.isNotEmpty) {
-
-                            //                                       final result = await bkash.pay(
-                            //       context: context,
-                            //       amount: totalAmount,
-                            //       merchantInvoiceNumber: "invoice123");
-                            //     FirebaseFirestore.instance
-                            //         .collection("orders")
-                            //         .add({
-                            //       'email': user!.email,
-                            //       'time': result.executeTime,
-                            //       'item': cardData,
-                            //       'trxId': result.trxId,
-                            //       'paymentId': result.paymentId,
-                            //       'merchantInvoiceNumber':
-                            //           result.merchantInvoiceNumber,
-                            //       'customerMsisdn': result.customerMsisdn,
-                            //     }).then((value) async {
-                            //       final cart = await FirebaseFirestore.instance
-                            //           .collection("users")
-                            //           .doc(user!.email)
-                            //           .collection('cart')
-                            //           .get();
-
-                            //       for (var item in cart.docs) {
-                            //         await item.reference.delete();
-                            //       }
-                            //     });
-                            //   }
-
-                            //   showTopSnackBar(
-                            //     Overlay.of(context),
-                            //     CustomSnackBar.success(
-                            //       message:
-                            //           'Payment Successfull. Your Transaction ID is: ${result.trxId}',
-                            //     ),
-                            //   );
-                            // } on BkashFailure catch (e) {
-                            //   showTopSnackBar(
-                            //     Overlay.of(context),
-                            //     CustomSnackBar.error(
-                            //       message: e.toString(),
-                            //     ),
-                            //   );
-                            // }
-                          },
-                        )
-                      ],
-                    ),
-                  ),
-                ));
+                      )
+                    : Container());
           }
         }));
   }

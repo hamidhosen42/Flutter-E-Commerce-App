@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 class AppTheme {
   ThemeData lightTheme(context) => ThemeData(
         brightness: Brightness.light,
-        appBarTheme: const AppBarTheme(
-          titleTextStyle: TextStyle(color: Colors.black),
-          iconTheme: IconThemeData(
-            color: Colors.black,
-          ),
-        ),
+        // appBarTheme: const AppBarTheme(
+        //   titleTextStyle: TextStyle(color: Colors.black),
+        //   iconTheme: IconThemeData(
+        //     color: Colors.black,
+        //   ),
+        // ),
         colorScheme: const ColorScheme.light(),
         primarySwatch: Colors.blue,
         // textTheme: GoogleFonts.poppinsTextTheme(

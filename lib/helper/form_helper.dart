@@ -42,6 +42,9 @@ class CutomTextField extends StatelessWidget {
               : Colors.white),
       decoration: InputDecoration(
           hintText: hintText,
+          hintStyle: TextStyle(color: themeManager.themeMode == ThemeMode.light
+              ? Colors.black
+              : Colors.white),
           filled: true,
           fillColor: themeManager.themeMode == ThemeMode.light
               ? AppColor.fieldBackgroundColor

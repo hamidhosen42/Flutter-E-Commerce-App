@@ -1,6 +1,4 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-
-import 'package:e_commerce/utils/colors.dart';
 import 'package:e_commerce/views/HomeScreen/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -35,8 +33,8 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
           selectedItemColor: color,
            type: BottomNavigationBarType.fixed, // Fixed 
          backgroundColor: themeManager.themeMode == ThemeMode.light
-            ? AppColor.fieldBackgroundColor
-            : Colors.black87, 
+            ? Colors.white
+            : Colors.black, 
           unselectedItemColor:themeManager.themeMode == ThemeMode.light
             ?  Colors.black.withOpacity(0.5):Colors.grey[700],
           onTap: (index) {

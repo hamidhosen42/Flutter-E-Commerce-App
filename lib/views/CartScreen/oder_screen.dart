@@ -37,14 +37,14 @@ class _OrderScreenState extends State<OrderScreen> {
           } else {
             return Scaffold(
               backgroundColor: themeManager.themeMode == ThemeMode.light
-                  ? AppColor.fieldBackgroundColor
-                  : Colors.black87,
+                  ? Colors.white
+                  : Colors.black,
               appBar: customAppBar(
                   context: context,
                   title: "My Order",
                   backgroundColor: themeManager.themeMode == ThemeMode.light
-                      ? AppColor.fieldBackgroundColor
-                      : Colors.black12),
+                      ? Colors.white
+                      : Colors.black),
               body: ListView.builder(
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) {
@@ -55,7 +55,9 @@ class _OrderScreenState extends State<OrderScreen> {
                       child: Container(
                           height: 70.h,
                           decoration: BoxDecoration(
-                              color: Color(0xFFF8F8F8),
+                              color: themeManager.themeMode == ThemeMode.light
+                      ? AppColor.fieldBackgroundColor
+                      : Colors.grey[900],
                               borderRadius: BorderRadius.circular(20)),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -82,13 +84,13 @@ class _OrderScreenState extends State<OrderScreen> {
                                       data['item'][0]['name'],
                                       style: TextStyle(
                                           fontWeight: FontWeight.w500,
-                                          fontSize: 14.sp),
+                                          fontSize: 14.sp,color: color),
                                     ),
                                     Text(
                                       "\$${data['amount']}",
                                       style: TextStyle(
                                           fontSize: 12.sp,
-                                          color: Colors.black.withOpacity(0.5),
+                                          color: color,
                                           fontWeight: FontWeight.bold),
                                     )
                                   ],
@@ -101,7 +103,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                     Text(
                                       data['gtName'],
                                       style: TextStyle(
-                                          color: Colors.black.withOpacity(0.5)),
+                                          color: color),
                                     ),
                                     Container(
                                       decoration: BoxDecoration(

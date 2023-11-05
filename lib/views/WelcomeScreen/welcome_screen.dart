@@ -5,6 +5,7 @@ import 'package:e_commerce/views/Authentication/RegisterScreen/register_screen.d
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../main.dart';
 import '../Authentication/LoginScreen/login_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -18,7 +19,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
+    final color =
+        themeManager.themeMode == ThemeMode.light ? Colors.black : Colors.white;
     return Scaffold(
+      backgroundColor: themeManager.themeMode == ThemeMode.light
+          ? Colors.white
+          : Colors.black,
       body: Center(
         child: Padding(
           padding: EdgeInsets.all(20),
@@ -39,7 +45,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     "Discover Your Dream Job here",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        color: AppColor.primaryColor,
+                        color: themeManager.themeMode == ThemeMode.light
+                            ? AppColor.primaryColor
+                            : Colors.white,
                         fontSize: 35.sp,
                         fontWeight: FontWeight.w800),
                   ),
@@ -51,7 +59,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 15.sp,
-                      color: Colors.black.withOpacity(0.5),
+                      color: themeManager.themeMode == ThemeMode.light
+                          ? Colors.black.withOpacity(0.5)
+                          : Colors.white38,
                     ),
                   ),
                 ],
@@ -108,7 +118,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             style: TextStyle(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                              color: color,
                             ),
                           ),
                         ),

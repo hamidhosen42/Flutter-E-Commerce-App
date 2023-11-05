@@ -29,14 +29,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
         themeManager.themeMode == ThemeMode.light ? Colors.black : Colors.white;
     return Scaffold(
         backgroundColor: themeManager.themeMode == ThemeMode.light
-            ? AppColor.fieldBackgroundColor
-            : Colors.black87,
+            ? Colors.white
+            : Colors.black,
         appBar: customAppBar(
             context: context,
             title: "Profile Screen",
             backgroundColor: themeManager.themeMode == ThemeMode.light
-                ? AppColor.fieldBackgroundColor
-                : Colors.black12),
+            ? Colors.white
+            : Colors.black,
+                ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -59,7 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       return Card(
                         color: themeManager.themeMode == ThemeMode.light
                             ? AppColor.fieldBackgroundColor
-                            : Colors.black12,
+                            : Colors.grey[900],
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
                         child: Padding(
@@ -88,15 +89,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                 ""
                                                             ? Image.network(
                                                                 data['image'],
-                                                                height: 80.h,
-                                                                width: 80.w,
+                                                                height: 70.h,
+                                                                width: 70.w,
                                                                 fit: BoxFit
                                                                     .cover,
                                                               )
                                                             : Image.asset(
                                                                 "assets/avatar.png",
-                                                                height: 80.h,
-                                                                width: 80.w,
+                                                                height: 70.h,
+                                                                width: 70.w,
                                                               )),
                                                   ),
                                                 ),
@@ -108,14 +109,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               child: data!['image'] != ""
                                                   ? Image.network(
                                                       data['image'],
-                                                      height: 80.h,
-                                                      width: 80.w,
+                                                      height: 70.h,
+                                                      width: 70.w,
                                                       fit: BoxFit.cover,
                                                     )
                                                   : Image.asset(
                                                       "assets/avatar.png",
-                                                      height: 80.h,
-                                                      width: 80.w,
+                                                      height: 70.h,
+                                                      width: 70.w,
                                                     )),
                                         ),
                                       ),
@@ -186,7 +187,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                  Card(
                   color: themeManager.themeMode == ThemeMode.light
                       ? AppColor.fieldBackgroundColor
-                      : Colors.black12,
+                      : Colors.grey[900],
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
                   child: Padding(
@@ -235,7 +236,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Card(
                   color: themeManager.themeMode == ThemeMode.light
                       ? AppColor.fieldBackgroundColor
-                      : Colors.black12,
+                      : Colors.grey[900],
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
                   child: Padding(
@@ -284,7 +285,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Card(
                   color: themeManager.themeMode == ThemeMode.light
                       ? AppColor.fieldBackgroundColor
-                      : Colors.black12,
+                      : Colors.grey[900],
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
                   child: Padding(
@@ -333,7 +334,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Card(
                   color: themeManager.themeMode == ThemeMode.light
                       ? AppColor.fieldBackgroundColor
-                      : Colors.black12,
+                      : Colors.grey[900],
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
                   child: Padding(
@@ -382,7 +383,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Card(
                   color: themeManager.themeMode == ThemeMode.light
                       ? AppColor.fieldBackgroundColor
-                      : Colors.black12,
+                      : Colors.grey[900],
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
                   child: Padding(
@@ -436,15 +437,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Card(
                     color: themeManager.themeMode == ThemeMode.light
                         ? AppColor.fieldBackgroundColor
-                        : Colors.black12,
+                        : Colors.grey[900],
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                     child: Padding(
                       padding: const EdgeInsets.only(
                         left: 15,
                         right: 10,
-                        bottom: 5,
-                        top: 6,
                       ),
                       child: Padding(
                         padding: EdgeInsets.symmetric(vertical: 15.h),

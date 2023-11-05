@@ -5,6 +5,7 @@ import 'package:e_commerce/widget/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../main.dart';
 import '../../utils/colors.dart';
 
 class ProductByCategory extends StatefulWidget {
@@ -22,8 +23,15 @@ class _ProductByCategoryState extends State<ProductByCategory> {
   @override
   Widget build(BuildContext context) {
     final fireStore = FirebaseFirestore.instance;
+    final color =
+        themeManager.themeMode == ThemeMode.light ? Colors.black : Colors.white;
     return Scaffold(
-      appBar: customAppBar(context: context,title: widget.category['name']),
+        backgroundColor: themeManager.themeMode == ThemeMode.light
+            ? Colors.white
+            : Colors.black,
+      appBar: customAppBar(context: context,title: widget.category['name'], backgroundColor: themeManager.themeMode == ThemeMode.light
+            ? Colors.white
+            : Colors.black),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: StreamBuilder(
@@ -43,9 +51,12 @@ class _ProductByCategoryState extends State<ProductByCategory> {
                             itemCount: data.length,
                             itemBuilder: (context, index) {
                               return Card(
+                               color: themeManager.themeMode == ThemeMode.light
+                      ? AppColor.fieldBackgroundColor
+                      : Colors.grey[900],
                                 child: ListTile(
-                                  title: Text(data[index]['name']),
-                                  subtitle: Text('Discount:${data[index]['discount']}%'),
+                                  title: Text(data[index]['name'],style: TextStyle(color: color),),
+                                  subtitle: Text('Discount:${data[index]['discount']}%',style: TextStyle(color: color),),
                                   leading: data[index]['image'] != null
                                   ? ClipRRect(
                                       borderRadius: BorderRadius.all(
@@ -58,9 +69,9 @@ class _ProductByCategoryState extends State<ProductByCategory> {
                                       ),
                                     )
                                   : CircularProgressIndicator(
-                                      color: AppColor.primaryColor,
+                                      color:  themeManager.themeMode == ThemeMode.light ?AppColor.primaryColor:Colors.white,
                                     ),
-                                    trailing: Text("\$${data[index]['price']}",style: TextStyle(fontSize: 16.sp),),
+                                    trailing: Text("\$${data[index]['price']}",style: TextStyle(fontSize: 16.sp,color: color),),
                                 ),
                               );
                             });

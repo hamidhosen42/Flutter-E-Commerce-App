@@ -10,6 +10,7 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../admin/views/BottomBavBarView/bottom_view.dart';
 import '../../../helper/form_helper.dart';
+import '../../../main.dart';
 import '../../../utils/colors.dart';
 import '../../BottomBavBarView/bottom_view.dart';
 import '../RegisterScreen/register_screen.dart';
@@ -32,7 +33,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final color =
+        themeManager.themeMode == ThemeMode.light ? Colors.black : Colors.white;
     return Scaffold(
+        backgroundColor: themeManager.themeMode == ThemeMode.light
+            ? Colors.white
+            : Colors.black,
       body: Padding(
         padding: EdgeInsets.all(20),
         child: SingleChildScrollView(
@@ -40,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               SizedBox(
-                height: 120.h,
+                height: 100.h,
               ),
               Column(
                 children: [
@@ -48,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     "Login here",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        color: AppColor.primaryColor,
+                        color: themeManager.themeMode == ThemeMode.light? AppColor.primaryColor:Colors.white,
                         fontSize: 30.sp,
                         fontWeight: FontWeight.bold),
                   ),
@@ -59,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     "Welcome back you’ve\nbeen missed!",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        color: Colors.black,
+                        color:themeManager.themeMode == ThemeMode.light?  Colors.black:Colors.white,
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w600),
                   ),
@@ -111,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Text(
                             "Forgot your password",
                             style: TextStyle(
-                                color: AppColor.primaryColor,
+                                color: themeManager.themeMode == ThemeMode.light?AppColor.primaryColor:Colors.white,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500),
                           ),
@@ -173,7 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 20.h,
                     ),
                     InkWell(
                       onTap: () {
@@ -185,7 +191,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Text(
                         "Create new account",
                         style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w600),
+                            fontSize: 16,color: color, fontWeight: FontWeight.w600),
                       ),
                     ),
                   ],

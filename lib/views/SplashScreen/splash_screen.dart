@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 300), () {
       // ! ---To go to the next screen and cancel all previous routes (Get.to)
       user.authStateChanges().listen((event) {
         if (event == null && mounted) {
@@ -47,9 +47,9 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     return Scaffold(
-      backgroundColor:  themeManager.themeMode == ThemeMode.light
-                      ? AppColor.primaryColor
-                      : Colors.black12,
+      backgroundColor: themeManager.themeMode == ThemeMode.light
+          ? AppColor.primaryColor
+          : Colors.black12,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
