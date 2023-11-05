@@ -118,30 +118,6 @@ class _PaymentGetewayScreenState extends State<PaymentGetewayScreen> {
                             }
                           } else if (status == 'paymentFailed') {
                             if (data.isEmpty) {
-                              final data = FirebaseFirestore.instance
-                                  .collection("orders")
-                                  .doc(user!.email)
-                                  .collection("order")
-                                  .doc();
-
-                              data.set({
-                                'id': data.id.toString(),
-                                'email': user!.email,
-                                'item': widget.cardData,
-                                'amount': widget.totalAmount,
-                                'gtName': 'bKash',
-                                'delivery': true
-                              }).then((value) async {
-                                final cart = await FirebaseFirestore.instance
-                                    .collection("users")
-                                    .doc(user!.email)
-                                    .collection('cart')
-                                    .get();
-
-                                for (var item in cart.docs) {
-                                  await item.reference.delete();
-                                }
-                              });
                               showTopSnackBar(
                                 Overlay.of(context),
                                 CustomSnackBar.error(
@@ -158,30 +134,6 @@ class _PaymentGetewayScreenState extends State<PaymentGetewayScreen> {
                                 ),
                               );
                             } else {
-                              final data = FirebaseFirestore.instance
-                                  .collection("orders")
-                                  .doc(user!.email)
-                                  .collection("order")
-                                  .doc();
-
-                              data.set({
-                                'id': data.id.toString(),
-                                'email': user!.email,
-                                'item': widget.cardData,
-                                'amount': widget.totalAmount,
-                                'gtName': 'bKash',
-                                'delivery': true
-                              }).then((value) async {
-                                final cart = await FirebaseFirestore.instance
-                                    .collection("users")
-                                    .doc(user!.email)
-                                    .collection('cart')
-                                    .get();
-
-                                for (var item in cart.docs) {
-                                  await item.reference.delete();
-                                }
-                              });
                               showTopSnackBar(
                                 Overlay.of(context),
                                 CustomSnackBar.error(
@@ -199,30 +151,6 @@ class _PaymentGetewayScreenState extends State<PaymentGetewayScreen> {
                             );
                           } else if (status == 'paymentClose') {
                             if (data == 'closedWindow') {
-                              final data = FirebaseFirestore.instance
-                                  .collection("orders")
-                                  .doc(user!.email)
-                                  .collection("order")
-                                  .doc();
-
-                              data.set({
-                                'id': data.id.toString(),
-                                'email': user!.email,
-                                'item': widget.cardData,
-                                'amount': widget.totalAmount,
-                                'gtName': 'bKash',
-                                'delivery': true
-                              }).then((value) async {
-                                final cart = await FirebaseFirestore.instance
-                                    .collection("users")
-                                    .doc(user!.email)
-                                    .collection('cart')
-                                    .get();
-
-                                for (var item in cart.docs) {
-                                  await item.reference.delete();
-                                }
-                              });
                               showTopSnackBar(
                                 Overlay.of(context),
                                 CustomSnackBar.error(

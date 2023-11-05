@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/widget/custom_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../utils/colors.dart';
 import '../ProductsByCategory/pbc_screen.dart';
@@ -21,7 +22,7 @@ class _SeeAllScreenState extends State<SeeAllScreen> {
     return Scaffold(
       appBar: customAppBar(context: context, title: "All Top Categories"),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
         child: StreamBuilder(
             stream: fireStore.collection('categories').snapshots(),
             builder: (_, snapshot) {
@@ -63,8 +64,10 @@ class _SeeAllScreenState extends State<SeeAllScreen> {
                                 children: [
                                   Image.network(
                                     data[index]['icon']!,
+                                    height: 80.h,
+                                    width: 60.w,
                                   ),
-                                  Text(data[index]['name'])
+                                  Text(data[index]['name'],)
                                 ],
                               ),
                             ),

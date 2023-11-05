@@ -275,12 +275,12 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                               title: Text(
                                 data['name'],
                                 style: TextStyle(
-                                    fontSize: 16.sp,
+                                    fontSize: 14.sp,
                                     fontWeight: FontWeight.bold),
                               ),
                               subtitle: Text("${data['price']} BDT",
                                   style: TextStyle(
-                                      fontSize: 14.sp,
+                                      fontSize: 12.sp,
                                       fontWeight: FontWeight.w700)),
                               trailing: PopupMenuButton(
                                 itemBuilder: (context) => [
