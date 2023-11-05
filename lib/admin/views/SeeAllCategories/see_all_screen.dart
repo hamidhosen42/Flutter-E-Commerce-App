@@ -8,6 +8,7 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../utils/colors.dart';
+import '../../../views/ProductsByCategory/pbc_screen.dart';
 import '../BottomBavBarView/bottom_view.dart';
 import '../EditCategories/edit_categories.dart';
 
@@ -51,6 +52,7 @@ class _AdminSeeAllScreenState extends State<AdminSeeAllScreen> {
         child: StreamBuilder(
             stream: fireStore.collection('categories').snapshots(),
             builder: (_, snapshot) {
+                final data1 = snapshot.data?.docs ?? [];
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
                   child: CircularProgressIndicator(
@@ -58,13 +60,20 @@ class _AdminSeeAllScreenState extends State<AdminSeeAllScreen> {
                   ),
                 );
               } else {
-                return Expanded(
-                  child: ListView(
-                    children: List.generate(
-                      snapshot.data!.docs.length,
-                      (index) {
-                        var data = snapshot.data!.docs[index];
-                        return Card(
+                return ListView(
+                  children: List.generate(
+                    snapshot.data!.docs.length,
+                    (index) {
+                      var data = snapshot.data!.docs[index];
+                      return InkWell(
+                        onTap: (){
+                           Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => ProductByCategory(
+                                      category: data1[index])));
+                        },
+                        child: Card(
                           color: AppColor.fieldBackgroundColor,
                           child: ListTile(
                             leading: data['icon'] != null
@@ -133,9 +142,9 @@ class _AdminSeeAllScreenState extends State<AdminSeeAllScreen> {
                               ],
                             ),
                           ),
-                        );
-                      },
-                    ),
+                        ),
+                      );
+                    },
                   ),
                 );
               }

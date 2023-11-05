@@ -12,6 +12,7 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../views/Authentication/LoginScreen/login_screen.dart';
 import '../../../views/ProductDetaris/product_details.dart';
+import '../../../views/ProductsByCategory/pbc_screen.dart';
 import '../../../widget/dashboard_button.dart';
 import '../EditProduct/edit_product.dart';
 
@@ -206,16 +207,25 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                             primary: false,
                             itemCount: data.length,
                             itemBuilder: (context, index) {
-                              return Container(
-                                margin: EdgeInsets.only(right: 15),
-                                width: 70,
-                                decoration: BoxDecoration(
-                                    color: Color(0xFFF2F2F2),
-                                    border:
-                                        Border.all(color: Color(0xFFD8D3D3)),
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: Center(
-                                    child: Image.network(data[index]['icon']!)),
+                              return InkWell(
+                                onTap: (){
+                                   Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => ProductByCategory(
+                                      category: data[index])));
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.only(right: 15),
+                                  width: 70,
+                                  decoration: BoxDecoration(
+                                      color: Color(0xFFF2F2F2),
+                                      border:
+                                          Border.all(color: Color(0xFFD8D3D3)),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Center(
+                                      child: Image.network(data[index]['icon']!)),
+                                ),
                               );
                             }),
                       ),

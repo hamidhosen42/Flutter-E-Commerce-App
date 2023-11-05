@@ -39,39 +39,37 @@ class _UserScrenState extends State<UserScren> {
                 if (!snapshot.hasData) {
                   return Center(child: CircularProgressIndicator());
                 } else {
-                  return Expanded(
-                    child: ListView(
-                      children: List.generate(
-                        snapshot.data!.docs.length,
-                        (index) {
-                          var data = snapshot.data!.docs[index];
-                          return Card(
-                            color: AppColor.fieldBackgroundColor,
-                            child: ListTile(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => AdminOrderScreen(
-                                              email: data['email'],
-                                            )));
-                              },
-                              
-                              title: Text(
-                                data['name'],
-                                style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              subtitle: Text(data['email'],
-                                  style: TextStyle(
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w700)),
-                    
+                  return ListView(
+                    children: List.generate(
+                      snapshot.data!.docs.length,
+                      (index) {
+                        var data = snapshot.data!.docs[index];
+                        return Card(
+                          color: AppColor.fieldBackgroundColor,
+                          child: ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => AdminOrderScreen(
+                                            email: data['email'],
+                                          )));
+                            },
+                            
+                            title: Text(
+                              data['name'],
+                              style: TextStyle(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.bold),
                             ),
-                          );
-                        },
-                      ),
+                            subtitle: Text(data['email'],
+                                style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w700)),
+                  
+                          ),
+                        );
+                      },
                     ),
                   );
                 }

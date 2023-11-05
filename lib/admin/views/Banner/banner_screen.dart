@@ -48,79 +48,77 @@ class _BannerScreenState extends State<BannerScreen> {
             ),
           );
         } else {
-          return Expanded(
-            child: ListView(
-              children: List.generate(
-                snapshot.data!.docs.length,
-                (index) {
-                  var data = snapshot.data!.docs[index];
-                  return Card(
-                    color: AppColor.fieldBackgroundColor,
-                    child: ListTile(
-                      leading: data['image'] != null
-                          ? ClipRRect(
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(
-                                      10)), // Adjust the radius as needed
-                              child: Image.network(
-                                data['image'],
-                                width: 100.w,
-                                height: 40.h,
-                                fit: BoxFit.fill,
-                              ),
-                            )
-                          : CircularProgressIndicator(
-                              color: AppColor.primaryColor,
+          return ListView(
+            children: List.generate(
+              snapshot.data!.docs.length,
+              (index) {
+                var data = snapshot.data!.docs[index];
+                return Card(
+                  color: AppColor.fieldBackgroundColor,
+                  child: ListTile(
+                    leading: data['image'] != null
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(
+                                    10)), // Adjust the radius as needed
+                            child: Image.network(
+                              data['image'],
+                              width: 100.w,
+                              height: 40.h,
+                              fit: BoxFit.fill,
                             ),
-                      trailing: PopupMenuButton(
-                        itemBuilder: (context) => [
-                          PopupMenuItem(
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => EditBanners(
-                                            banners: data)));
-                              },
-                              child: Row(
-                                children: [
-                                  Icon(Icons.edit),
-                                  SizedBox(width: 10.w),
-                                  Text("Edit"),
-                                ],
-                              ),
+                          )
+                        : CircularProgressIndicator(
+                            color: AppColor.primaryColor,
+                          ),
+                    trailing: PopupMenuButton(
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => EditBanners(
+                                          banners: data)));
+                            },
+                            child: Row(
+                              children: [
+                                Icon(Icons.edit),
+                                SizedBox(width: 10.w),
+                                Text("Edit"),
+                              ],
                             ),
                           ),
-                          PopupMenuItem(
-                            child: InkWell(
-                              onTap: () {
-                                FirebaseFirestore.instance
-                                    .collection('banners')
-                                    .doc(data.id)
-                                    .delete();
-                                showTopSnackBar(
-                                    Overlay.of(context),
-                                    CustomSnackBar.success(
-                                      message: "Successfully Banner Delete",
-                                    ));
-                                Navigator.pop(context);
-                              },
-                              child: Row(
-                                children: [
-                                  Icon(Icons.delete),
-                                  SizedBox(width: 10.w),
-                                  Text("Delete"),
-                                ],
-                              ),
+                        ),
+                        PopupMenuItem(
+                          child: InkWell(
+                            onTap: () {
+                              FirebaseFirestore.instance
+                                  .collection('banners')
+                                  .doc(data.id)
+                                  .delete();
+                              showTopSnackBar(
+                                  Overlay.of(context),
+                                  CustomSnackBar.success(
+                                    message: "Successfully Banner Delete",
+                                  ));
+                              Navigator.pop(context);
+                            },
+                            child: Row(
+                              children: [
+                                Icon(Icons.delete),
+                                SizedBox(width: 10.w),
+                                Text("Delete"),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
           );
         }

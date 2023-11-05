@@ -3,12 +3,10 @@
 import 'dart:async';
 
 import 'package:e_commerce/utils/colors.dart';
-import 'package:e_commerce/utils/config.dart';
 import 'package:e_commerce/views/Authentication/LoginScreen/login_screen.dart';
 import 'package:e_commerce/views/BottomBavBarView/bottom_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../main.dart';
 
@@ -25,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 300), () {
+    Future.delayed(const Duration(seconds: 5), () {
       // ! ---To go to the next screen and cancel all previous routes (Get.to)
       user.authStateChanges().listen((event) {
         if (event == null && mounted) {
@@ -52,36 +50,12 @@ class _SplashScreenState extends State<SplashScreen> {
           : Colors.black12,
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(),
             Image.asset(
-              "assets/images/splash_screen.png",
+              "assets/images/logo.png",
               width: size.width * 0.8,
-            ),
-            Column(
-              children: [
-                Text(
-                  AppConfig.appName,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25.sp,
-                      fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  "Version: 1.0",
-                  style: TextStyle(
-                      fontSize: 20.sp,
-                      letterSpacing: 1,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w800,
-                      fontStyle: FontStyle.italic),
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-              ],
             ),
           ],
         ),

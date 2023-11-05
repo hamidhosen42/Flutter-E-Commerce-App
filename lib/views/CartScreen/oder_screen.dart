@@ -45,96 +45,120 @@ class _OrderScreenState extends State<OrderScreen> {
                   backgroundColor: themeManager.themeMode == ThemeMode.light
                       ? Colors.white
                       : Colors.black),
-              body: ListView.builder(
-                  itemCount: snapshot.data!.docs.length,
-                  itemBuilder: (context, index) {
-                    final data = snapshot.data!.docs[index];
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 5),
-                      child: Container(
-                          height: 70.h,
-                          decoration: BoxDecoration(
-                              color: themeManager.themeMode == ThemeMode.light
-                      ? AppColor.fieldBackgroundColor
-                      : Colors.grey[900],
-                              borderRadius: BorderRadius.circular(20)),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Row(
+             body: ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  final data = snapshot.data!.docs[index];
+                  final items = data['item'] as List<dynamic>;
+
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 5),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColor.fieldBackgroundColor,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: items.map((item) {
+                            return Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Container(
                                   child: Center(
-                                      child: Image.network(
-                                          data['item'][0]['image'])),
-                                  height: 60.h,
-                                  width: 80.w,
+                                    child: Image.network(item['image']),
+                                  ),
+                                  height: 50.h,
+                                  width: 50.w,
                                   decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(15)),
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
                                 ),
                                 Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      data['item'][0]['name'],
+                                      item['name'],
                                       style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14.sp,color: color),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14.sp,
+                                      ),
                                     ),
                                     Text(
-                                      "\$${data['amount']}",
+                                      "\$${item['price']}",
                                       style: TextStyle(
-                                          fontSize: 12.sp,
-                                          color: color,
-                                          fontWeight: FontWeight.bold),
-                                    )
+                                        fontSize: 12.sp,
+                                        color: Colors.black.withOpacity(0.5),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ],
                                 ),
                                 Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
                                       data['gtName'],
                                       style: TextStyle(
-                                          color: color),
+                                        color: Colors.black.withOpacity(0.5),
+                                      ),
                                     ),
                                     Container(
                                       decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          border: Border.all(
-                                              color: AppColor.primaryColor)),
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                          color: AppColor.primaryColor,
+                                        ),
+                                      ),
                                       child: Padding(
                                         padding: EdgeInsets.symmetric(
-                                            vertical: 5, horizontal: 5),
+                                          vertical: 5,
+                                          horizontal: 5,
+                                        ),
                                         child: data['delivery'] == false
-                                            ? Text(
-                                                "Pending",
-                                                style: TextStyle(
-                                                    color: Colors.red),
+                                            ? InkWell(
+                                                onTap: () async {
+                                                  FirebaseFirestore.instance
+                                                      .collection("orders")
+                                                      .doc(user!.email)
+                                                      .collection("order")
+                                                      .doc(data['id'])
+                                                      .update({"delivery": true});
+                                                },
+                                                child: Text(
+                                                  "Pending",
+                                                  style: TextStyle(
+                                                    color: Colors.red,
+                                                  ),
+                                                ),
                                               )
                                             : Text(
                                                 "Success",
                                                 style: TextStyle(
-                                                    color: Colors.blue),
+                                                  color: Colors.blue,
+                                                ),
                                               ),
                                       ),
-                                    )
+                                    ),
                                   ],
-                                )
+                                ),
                               ],
-                            ),
-                          )),
-                    );
-                  }),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
             );
           }
         }));

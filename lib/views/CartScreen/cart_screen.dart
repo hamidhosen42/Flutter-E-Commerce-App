@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last, unnecessary_brace_in_string_interps, use_build_context_synchronously, unused_local_variable
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last, unnecessary_brace_in_string_interps, use_build_context_synchronously, unused_local_variable, prefer_is_empty
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/utils/colors.dart';
@@ -63,13 +63,13 @@ class _CartScreenState extends State<CartScreen> {
           } else {
             return Scaffold(
                 backgroundColor: themeManager.themeMode == ThemeMode.light
-                    ? AppColor.fieldBackgroundColor
+                    ? Colors.white
                     : Colors.black,
                 appBar: customAppBar(
                   context: context,
                   title: "My Cart",
                   backgroundColor: themeManager.themeMode == ThemeMode.light
-                      ? AppColor.fieldBackgroundColor
+                      ? Colors.white
                       : Colors.black,
                 ),
                 body: ListView.builder(

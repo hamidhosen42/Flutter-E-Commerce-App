@@ -30,7 +30,7 @@ class SupportScreen extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                "The FlutterChittagong Bhromon App is a versatile mobile application designed to SupportScreen tourists exploring Chittagong, Bangladesh. It provides a user-friendly platform with various features to assist users in planning and enjoying their visit to the city. The app includes secure email verification authentication and profile updates to ensure user security. It offers a comprehensive list of popular tourist spots, complete with detailed overviews, images, and ratings, allowing users to browse and choose their preferred destinations. Each spot has dedicated screens with in-depth information, including historical significance and visitor tips, enhancing the user's knowledge and experience. The app also highlights local culinary delights in the food item section, providing tourists with an opportunity to explore the local cuisine. Additionally, the app includes an admin panel that enables administrators to easily add new tourist spots, ensuring the app stays up to date with the latest attractions. Overall, the FlutterChittagong Bhromon App aims to provide a comprehensive and user-friendly platform for tourists to plan and enjoy their visit to Chittagong.",
+                "ShopSavvy support plays a crucial role in the overall success of an ShopSavvy business. Our ShopSavvy support services are designed to ensure a smooth and efficient customer shopping experience.",
                 textAlign: TextAlign.justify,
                 style: TextStyle(color: color),
               ),
@@ -44,8 +44,8 @@ class SupportScreen extends StatelessWidget {
               Divider(
                 color: color,
               ),
-              supportField("Phone", "01858570337"),
-              supportField("E-mail", "hamidhosen8444@mail.com"),
+              supportField("Phone", "01858570332"),
+              supportField("E-mail", "mdhamidhosen4@gmail.com"),
               supportField("Facebook", "http://facebook.com"),
             ],
           ),

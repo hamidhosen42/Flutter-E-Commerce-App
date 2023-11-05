@@ -50,8 +50,6 @@ class PrivacyScreen extends StatelessWidget {
               customDescriptionText(
                   title: AppConfig.title1Eng, desc: AppConfig.desc1Eng),
               10.h.heightBox,
-              customDescriptionText(
-                  title: AppConfig.title2Eng, desc: AppConfig.desc2Eng),
               10.h.heightBox,
               customDescriptionText(
                   title: AppConfig.title3Eng, desc: AppConfig.desc3Eng),
