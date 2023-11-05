@@ -1,17 +1,29 @@
-// ignore_for_file: must_be_immutable, use_key_in_widget_constructors, unused_field, prefer_final_fields, prefer_const_constructors
+// ignore_for_file: must_be_immutable, use_key_in_widget_constructors, unused_field, prefer_final_fields, prefer_const_constructors, unused_local_variable
 
 import 'package:e_commerce/widget/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../main.dart';
+import '../../utils/colors.dart';
 import '../../utils/config.dart';
 
 class PrivacyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final color =
+        themeManager.themeMode == ThemeMode.light ? Colors.black : Colors.white;
     return Scaffold(
-      appBar: customAppBar(context: context,title: "Privacy Policy Screen"),
+      backgroundColor: themeManager.themeMode == ThemeMode.light
+          ? AppColor.fieldBackgroundColor
+          : Colors.black87,
+      appBar: customAppBar(
+          context: context,
+          title: "Privacy Policy Screen",
+          backgroundColor: themeManager.themeMode == ThemeMode.light
+              ? AppColor.fieldBackgroundColor
+              : Colors.black12),
       body: Padding(
         padding: EdgeInsets.all(18.h),
         child: SingleChildScrollView(
@@ -22,7 +34,7 @@ class PrivacyScreen extends StatelessWidget {
               Text(
                 AppConfig.introEng,
                 style: TextStyle(
-                  color: Colors.black,
+                  color: color,
                 ),
                 textAlign: TextAlign.justify,
               ),
@@ -30,41 +42,49 @@ class PrivacyScreen extends StatelessWidget {
               Text(
                 AppConfig.headingEng1,
                 style: TextStyle(
-                  color: Colors.black,
+                  color: color,
                   fontWeight: FontWeight.w800,
                   fontSize: 20.sp,
                 ),
               ),
               15.h.heightBox,
-              customDescriptionText(title: AppConfig.title1Eng, desc:AppConfig.desc1Eng),
+              customDescriptionText(
+                  title: AppConfig.title1Eng, desc: AppConfig.desc1Eng),
               10.h.heightBox,
-              customDescriptionText(title: AppConfig.title2Eng, desc: AppConfig.desc2Eng),
+              customDescriptionText(
+                  title: AppConfig.title2Eng, desc: AppConfig.desc2Eng),
               10.h.heightBox,
-              customDescriptionText(title:AppConfig.title3Eng, desc:AppConfig.desc3Eng),
+              customDescriptionText(
+                  title: AppConfig.title3Eng, desc: AppConfig.desc3Eng),
               10.h.heightBox,
               Text(
-               AppConfig.headingEng2,
+                AppConfig.headingEng2,
                 style: TextStyle(
-                  color: Colors.black,
+                  color: color,
                   fontWeight: FontWeight.w800,
                   fontSize: 20.sp,
                 ),
               ),
               10.h.heightBox,
-              customDescriptionText(title: AppConfig.title4Eng, desc: AppConfig.desc4Eng),
+              customDescriptionText(
+                  title: AppConfig.title4Eng, desc: AppConfig.desc4Eng),
               10.h.heightBox,
-              customDescriptionText(title: AppConfig.title5Eng, desc: AppConfig.desc5Eng),
+              customDescriptionText(
+                  title: AppConfig.title5Eng, desc: AppConfig.desc5Eng),
               10.h.heightBox,
-              customDescriptionText(title: AppConfig.title6Eng, desc: AppConfig.desc6Eng),
+              customDescriptionText(
+                  title: AppConfig.title6Eng, desc: AppConfig.desc6Eng),
               10.h.heightBox,
-              customDescriptionText(title: AppConfig.title7Eng, desc: AppConfig.desc7Eng),
+              customDescriptionText(
+                  title: AppConfig.title7Eng, desc: AppConfig.desc7Eng),
               10.h.heightBox,
-              customDescriptionText(title: AppConfig.title8Eng, desc: AppConfig.desc8Eng),
+              customDescriptionText(
+                  title: AppConfig.title8Eng, desc: AppConfig.desc8Eng),
               10.h.heightBox,
               Text(
                 AppConfig.conclusionEng,
                 style: TextStyle(
-                  color: Colors.black,
+                  color: color,
                 ),
                 textAlign: TextAlign.justify,
               ),
@@ -76,13 +96,15 @@ class PrivacyScreen extends StatelessWidget {
   }
 
   Widget customDescriptionText({required String title, required String desc}) {
+     final color =
+        themeManager.themeMode == ThemeMode.light ? Colors.black : Colors.white;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           title,
           style: TextStyle(
-            color: Colors.black,
+            color: color,
             fontWeight: FontWeight.w600,
             fontSize: 16.sp,
           ),
@@ -93,7 +115,7 @@ class PrivacyScreen extends StatelessWidget {
           child: Text(
             desc,
             style: TextStyle(
-              color: Colors.black,
+              color: color,
               fontWeight: FontWeight.w300,
               fontSize: 16.sp,
             ),

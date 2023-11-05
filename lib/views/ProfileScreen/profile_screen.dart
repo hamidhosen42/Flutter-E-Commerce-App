@@ -10,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../main.dart';
 import '../Authentication/LoginScreen/login_screen.dart';
+import 'faq_screen.dart';
 import 'privacy_policy_screen.dart';
 import 'support_screen.dart';
 
@@ -23,8 +24,18 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
+    final color =
+        themeManager.themeMode == ThemeMode.light ? Colors.black : Colors.white;
     return Scaffold(
-        appBar: customAppBar(context: context, title: "Profile Screen"),
+        backgroundColor: themeManager.themeMode == ThemeMode.light
+            ? AppColor.fieldBackgroundColor
+            : Colors.black87,
+        appBar: customAppBar(
+            context: context,
+            title: "Profile Screen",
+            backgroundColor: themeManager.themeMode == ThemeMode.light
+                ? AppColor.fieldBackgroundColor
+                : Colors.black12),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -45,7 +56,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     } else {
                       var data = snapshot.data;
                       return Card(
-                        color: AppColor.fieldBackgroundColor,
+                        color: themeManager.themeMode == ThemeMode.light
+                            ? AppColor.fieldBackgroundColor
+                            : Colors.black12,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
                         child: Padding(
@@ -66,7 +79,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) => Scaffold(
-                                                  backgroundColor: Colors.grey,
+                                                  backgroundColor: color,
                                                   body: Center(
                                                     child: Hero(
                                                         tag: 'user-avatar',
@@ -118,7 +131,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           },
                                           icon: Icon(
                                             Icons.edit,
-                                            color: Colors.black,
+                                            color: color,
                                             size: 25.sp,
                                           ),
                                         ),
@@ -135,18 +148,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         padding: const EdgeInsets.all(1),
                                         child: Text(
                                           data['name'],
-                                          style: TextStyle(fontSize: 20.sp),
+                                          style: TextStyle(
+                                              fontSize: 20.sp, color: color),
                                         ),
                                       ),
                                       Padding(
                                         padding:
                                             EdgeInsets.only(left: 2, bottom: 5),
-                                        child: Text(data['email']),
+                                        child: Text(
+                                          data['email'],
+                                          style: TextStyle(color: color),
+                                        ),
                                       ),
                                       Padding(
                                         padding:
                                             EdgeInsets.only(left: 2, bottom: 5),
-                                        child: Text(data['address']),
+                                        child: Text(
+                                          data['address'],
+                                          style: TextStyle(color: color),
+                                        ),
                                       ),
                                     ],
                                   )),
@@ -163,7 +183,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   height: 10.h,
                 ),
                 Card(
-                  color: AppColor.fieldBackgroundColor,
+                  color: themeManager.themeMode == ThemeMode.light
+                      ? AppColor.fieldBackgroundColor
+                      : Colors.black12,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
                   child: Padding(
@@ -178,13 +200,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: [
                         Row(
                           children: [
-                            Icon(Icons.support),
+                            Icon(
+                              Icons.support,
+                              color: color,
+                            ),
                             SizedBox(
                               width: 10.h,
                             ),
                             Text(
                               'Support',
-                              style: TextStyle(fontSize: 18.sp),
+                              style: TextStyle(fontSize: 18.sp, color: color),
                             ),
                           ],
                         ),
@@ -195,7 +220,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   MaterialPageRoute(
                                       builder: (_) => SupportScreen()));
                             },
-                            icon: const Icon(Icons.arrow_forward_ios_rounded))
+                            icon: Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              color: color,
+                            ))
                       ],
                     ),
                   ),
@@ -204,7 +232,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   height: 10.h,
                 ),
                 Card(
-                  color: AppColor.fieldBackgroundColor,
+                  color: themeManager.themeMode == ThemeMode.light
+                      ? AppColor.fieldBackgroundColor
+                      : Colors.black12,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
                   child: Padding(
@@ -219,13 +249,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: [
                         Row(
                           children: [
-                            Icon(Icons.support),
+                            Icon(
+                              Icons.support,
+                              color: color,
+                            ),
                             SizedBox(
                               width: 10.h,
                             ),
                             Text(
                               'Privacy',
-                              style: TextStyle(fontSize: 18.sp),
+                              style: TextStyle(fontSize: 18.sp, color: color),
                             ),
                           ],
                         ),
@@ -236,7 +269,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   MaterialPageRoute(
                                       builder: (_) => PrivacyScreen()));
                             },
-                            icon: const Icon(Icons.arrow_forward_ios_rounded))
+                            icon: Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              color: color,
+                            ))
                       ],
                     ),
                   ),
@@ -245,7 +281,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   height: 10.h,
                 ),
                 Card(
-                  color: AppColor.fieldBackgroundColor,
+                  color: themeManager.themeMode == ThemeMode.light
+                      ? AppColor.fieldBackgroundColor
+                      : Colors.black12,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
                   child: Padding(
@@ -260,13 +298,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: [
                         Row(
                           children: [
-                            Icon(Icons.support),
+                            Icon(
+                              Icons.support,
+                              color: color,
+                            ),
                             SizedBox(
                               width: 10.h,
                             ),
                             Text(
                               'FAQ',
-                              style: TextStyle(fontSize: 18.sp),
+                              style: TextStyle(fontSize: 18.sp, color: color),
                             ),
                           ],
                         ),
@@ -275,9 +316,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (_) => PrivacyScreen()));
+                                      builder: (_) => FAQScreen()));
                             },
-                            icon: const Icon(Icons.question_answer))
+                            icon: Icon(
+                              Icons.question_answer,
+                              color: color,
+                            ))
                       ],
                     ),
                   ),
@@ -286,7 +330,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   height: 10.h,
                 ),
                 Card(
-                  color: AppColor.fieldBackgroundColor,
+                  color: themeManager.themeMode == ThemeMode.light
+                      ? AppColor.fieldBackgroundColor
+                      : Colors.black12,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
                   child: Padding(
@@ -301,18 +347,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: [
                         Row(
                           children: [
-                            Icon(Icons.color_lens),
+                            Icon(
+                              Icons.color_lens,
+                              color: color,
+                            ),
                             SizedBox(
                               width: 10.h,
                             ),
                             Text(
                               'Theme',
-                              style: TextStyle(fontSize: 18.sp),
+                              style: TextStyle(fontSize: 18.sp, color: color),
                             ),
                           ],
                         ),
                         Switch(
                             value: themeManager.themeMode == ThemeMode.dark,
+                            activeColor: color,
                             onChanged: (value) async {
                               setState(() {
                                 themeManager.toggleTheme(value);
@@ -334,7 +384,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         (route) => false);
                   },
                   child: Card(
-                    color: AppColor.fieldBackgroundColor,
+                    color: themeManager.themeMode == ThemeMode.light
+                        ? AppColor.fieldBackgroundColor
+                        : Colors.black12,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                     child: Padding(
@@ -351,13 +403,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           children: [
                             Row(
                               children: [
-                                Icon(Icons.logout),
+                                Icon(
+                                  Icons.logout,
+                                  color: color,
+                                ),
                                 SizedBox(
                                   width: 10.h,
                                 ),
                                 Text(
                                   'LogOut',
-                                  style: TextStyle(fontSize: 18.sp),
+                                  style:
+                                      TextStyle(fontSize: 18.sp, color: color),
                                 ),
                               ],
                             ),

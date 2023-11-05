@@ -49,7 +49,8 @@ class _PaymentGetewayScreenState extends State<PaymentGetewayScreen> {
       appBar: customAppBar(context: context, title: 'Payment Method'),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(children: [
+        child: Column(
+          children: [
           InkWell(
             onTap: () async {
               String intent = _intent == Intent.sale ? "sale" : "authorization";

@@ -4,6 +4,7 @@ import 'package:e_commerce/utils/colors.dart';
 import 'package:e_commerce/views/HomeScreen/home_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../../main.dart';
 import '../CartScreen/cart_screen.dart';
 import '../FavouriteScreen/favourite_screen.dart';
 import '../ProfileScreen/profile_screen.dart';
@@ -25,14 +26,19 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
   ];
   @override
   Widget build(BuildContext context) {
+  final color =
+        themeManager.themeMode == ThemeMode.light ? Colors.black : Colors.white;
     return Scaffold(
       body: screen[selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: selectedIndex,
-          selectedItemColor: AppColor.primaryColor,
-          // showUnselectedLabels: false,
-          // showSelectedLabels: false,
-          unselectedItemColor: Colors.black.withOpacity(0.5),
+          selectedItemColor: color,
+           type: BottomNavigationBarType.fixed, // Fixed 
+         backgroundColor: themeManager.themeMode == ThemeMode.light
+            ? AppColor.fieldBackgroundColor
+            : Colors.black87, 
+          unselectedItemColor:themeManager.themeMode == ThemeMode.light
+            ?  Colors.black.withOpacity(0.5):Colors.grey[700],
           onTap: (index) {
             setState(() {
               selectedIndex = index;

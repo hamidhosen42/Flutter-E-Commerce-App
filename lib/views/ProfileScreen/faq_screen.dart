@@ -5,13 +5,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../main.dart';
+import '../../utils/colors.dart';
 import '../../utils/config.dart';
 
 class FAQScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context: context, title: "FAG"),
+      backgroundColor: themeManager.themeMode == ThemeMode.light
+          ? AppColor.fieldBackgroundColor
+          : Colors.black87,
+      appBar: customAppBar(
+          context: context,
+          title: "FAQ Screen",
+          backgroundColor: themeManager.themeMode == ThemeMode.light
+              ? AppColor.fieldBackgroundColor
+              : Colors.black12),
       body: Padding(
         padding: EdgeInsets.all(18.h),
         child: SingleChildScrollView(
@@ -56,10 +66,10 @@ class FAQScreen extends StatelessWidget {
   ExpansionTile customExpansionTile(
       {required String title, required String description}) {
     return ExpansionTile(
-      // backgroundColor: Colors.grey[400],
-      collapsedTextColor: Colors.black,
-      iconColor: Colors.black,
-      textColor: Colors.black,
+      backgroundColor: Colors.grey,
+      collapsedTextColor: themeManager.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+      iconColor:   themeManager.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+      textColor:   themeManager.themeMode == ThemeMode.light ? Colors.black : Colors.white,
       childrenPadding: EdgeInsets.all(10.h),
       title: Text(title),
       children: [

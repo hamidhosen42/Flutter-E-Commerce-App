@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../main.dart';
 import '../utils/colors.dart';
 
 class CutomTextField extends StatelessWidget {
@@ -18,8 +19,7 @@ class CutomTextField extends StatelessWidget {
       this.secured,
       this.suffixIcon,
       this.isRequired,
-      this.controller
-      });
+      this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -35,15 +35,25 @@ class CutomTextField extends StatelessWidget {
               return null;
             }
           : null,
-      style: TextStyle(fontWeight: FontWeight.w500),
+      style: TextStyle(
+          fontWeight: FontWeight.w500,
+          color: themeManager.themeMode == ThemeMode.light
+              ? Colors.black
+              : Colors.white),
       decoration: InputDecoration(
           hintText: hintText,
           filled: true,
-          fillColor: AppColor.fieldBackgroundColor,
+          fillColor: themeManager.themeMode == ThemeMode.light
+              ? AppColor.fieldBackgroundColor
+              : Colors.black87,
           suffixIcon: suffixIcon,
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: Colors.transparent))),
+              borderSide: BorderSide(
+                color: themeManager.themeMode == ThemeMode.light
+                    ? Colors.transparent
+                    : Colors.white,
+              ))),
     );
   }
 }

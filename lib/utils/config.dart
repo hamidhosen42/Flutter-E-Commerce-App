@@ -1,21 +1,12 @@
 class AppConfig {
   static String appName = "ShopSavvy";
   // ignore_for_file: static constant_identifier_names
-  // ! ------------------ app name --------------------------------
-  static const AppName = "BHROMON";
 
-  // ! ----------------OnBoarding Title text ----------------------------
-  static const onboarding_screen1_title = 'WELCOME TO BHROMON APP';
-  static const onboarding_screen2_title = "DISCOVER CHITTAGONG HIDDEN GEMS";
-  static const onboarding_screen3_title = 'PLAN YOUR PERFECT TRIP';
+  
+  static String bannerAdUnit = "ca-app-pub-3940256099942544/6300978111";
+  static String interAdUnit = "ca-app-pub-3940256099942544/1033173712";
+  static String rewardAdUnit = "ca-app-pub-3940256099942544/5224354917";
 
-  // ! ----------------OnBoarding SubTitle text ----------------------------
-  static const onboarding_screen1_subtitle =
-      'Your Ultimate Guide to Exploring Chittagong, Bangladesh';
-  static const onboarding_screen2_subtitle =
-      'Uncover the Rich History and Natural Beauty of the City';
-  static const onboarding_screen3_subtitle =
-      'Explore Popular Tourist Spots and Delight in Local Cuisine';
 
 //!---------FAQ english strings----------
   static const faqTitle1 = "Explore Chittagong's Hidden Gems";

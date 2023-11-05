@@ -12,6 +12,9 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../helper/form_helper.dart';
+import '../../main.dart';
+import '../../utils/colors.dart';
+import '../../widget/custom_appbar.dart';
 import '../../widget/custom_button.dart';
 
 class ProfileEditScreen extends StatefulWidget {
@@ -72,7 +75,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
               height: 150.h,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.black),
+                border: Border.all(
+                    color: themeManager.themeMode == ThemeMode.light
+                        ? Colors.black
+                        : Colors.white),
               ),
               child: _image != null
                   ? Image.file(_image!)
@@ -134,10 +140,18 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final color =
+        themeManager.themeMode == ThemeMode.light ? Colors.black : Colors.white;
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Profile Edit"),
-      ),
+      backgroundColor: themeManager.themeMode == ThemeMode.light
+          ? AppColor.fieldBackgroundColor
+          : Colors.black87,
+      appBar: customAppBar(
+          context: context,
+          title: "Profile Edit",
+          backgroundColor: themeManager.themeMode == ThemeMode.light
+              ? AppColor.fieldBackgroundColor
+              : Colors.black12),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: StreamBuilder(
