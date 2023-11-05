@@ -145,7 +145,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     return Scaffold(
       backgroundColor: themeManager.themeMode == ThemeMode.light
           ? AppColor.fieldBackgroundColor
-          : Colors.black87,
+          : Colors.black12,
       appBar: customAppBar(
           context: context,
           title: "Profile Edit",

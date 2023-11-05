@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../AddCategories/add_categories.dart';
 import '../AddProduct/add_product.dart';
+import '../AllUser/user_screen.dart';
 import '../HomeScree/home_screen.dart';
 
 class BottomBarAdminScreen extends StatefulWidget {
@@ -20,7 +21,7 @@ class _BottomBarAdminScreenState extends State<BottomBarAdminScreen> {
     AdminHomeScreen(),
     AddProductScreen(),
     AddCategorieScreen(),
-    AddProductScreen(),
+    UserScren(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class _BottomBarAdminScreenState extends State<BottomBarAdminScreen> {
                 icon: Icon(Icons.add), label: "Add Product"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.category), label: "Add Categorie"),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: "User"),
           ]),
     );
   }

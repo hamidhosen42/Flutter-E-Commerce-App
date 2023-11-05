@@ -15,7 +15,7 @@ class FAQScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: themeManager.themeMode == ThemeMode.light
           ? AppColor.fieldBackgroundColor
-          : Colors.black87,
+          : Colors.black12,
       appBar: customAppBar(
           context: context,
           title: "FAQ Screen",

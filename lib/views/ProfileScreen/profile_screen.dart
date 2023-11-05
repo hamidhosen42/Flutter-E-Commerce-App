@@ -10,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../main.dart';
 import '../Authentication/LoginScreen/login_screen.dart';
+import '../CartScreen/oder_screen.dart';
 import 'faq_screen.dart';
 import 'privacy_policy_screen.dart';
 import 'support_screen.dart';
@@ -178,6 +179,55 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       );
                     }
                   },
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                 Card(
+                  color: themeManager.themeMode == ThemeMode.light
+                      ? AppColor.fieldBackgroundColor
+                      : Colors.black12,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 15,
+                      right: 10,
+                      bottom: 5,
+                      top: 6,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.payment,
+                              color: color,
+                            ),
+                            SizedBox(
+                              width: 10.h,
+                            ),
+                            Text(
+                              'Order',
+                              style: TextStyle(fontSize: 18.sp, color: color),
+                            ),
+                          ],
+                        ),
+                        IconButton(
+                            onPressed: () async {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => OrderScreen()));
+                            },
+                            icon: Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              color: color,
+                            ))
+                      ],
+                    ),
+                  ),
                 ),
                 SizedBox(
                   height: 10.h,

@@ -12,6 +12,8 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:flutter_bkash/flutter_bkash.dart';
 
+import 'success_payment.dart';
+
 enum Intent { sale, authorization }
 
 class PaymentGetewayScreen extends StatefulWidget {
@@ -49,8 +51,7 @@ class _PaymentGetewayScreenState extends State<PaymentGetewayScreen> {
       appBar: customAppBar(context: context, title: 'Payment Method'),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
+        child: Column(children: [
           InkWell(
             onTap: () async {
               String intent = _intent == Intent.sale ? "sale" : "authorization";
@@ -84,13 +85,19 @@ class _PaymentGetewayScreenState extends State<PaymentGetewayScreen> {
                           dev.log('return data => $data');
                           if (status == 'paymentSuccess') {
                             if (data['transactionStatus'] == 'Completed') {
-                              FirebaseFirestore.instance
+                              final data = FirebaseFirestore.instance
                                   .collection("orders")
-                                  .add({
+                                  .doc(user!.email)
+                                  .collection("order")
+                                  .doc();
+
+                              data.set({
+                                'id': data.id.toString(),
                                 'email': user!.email,
                                 'item': widget.cardData,
                                 'amount': widget.totalAmount,
-                                'gtName': 'bKash'
+                                'gtName': 'bKash',
+                                'delivery': true
                               }).then((value) async {
                                 final cart = await FirebaseFirestore.instance
                                     .collection("users")
@@ -111,13 +118,19 @@ class _PaymentGetewayScreenState extends State<PaymentGetewayScreen> {
                             }
                           } else if (status == 'paymentFailed') {
                             if (data.isEmpty) {
-                              FirebaseFirestore.instance
+                              final data = FirebaseFirestore.instance
                                   .collection("orders")
-                                  .add({
+                                  .doc(user!.email)
+                                  .collection("order")
+                                  .doc();
+
+                              data.set({
+                                'id': data.id.toString(),
                                 'email': user!.email,
                                 'item': widget.cardData,
                                 'amount': widget.totalAmount,
-                                'gtName': 'bKash'
+                                'gtName': 'bKash',
+                                'delivery': true
                               }).then((value) async {
                                 final cart = await FirebaseFirestore.instance
                                     .collection("users")
@@ -145,13 +158,19 @@ class _PaymentGetewayScreenState extends State<PaymentGetewayScreen> {
                                 ),
                               );
                             } else {
-                              FirebaseFirestore.instance
+                              final data = FirebaseFirestore.instance
                                   .collection("orders")
-                                  .add({
+                                  .doc(user!.email)
+                                  .collection("order")
+                                  .doc();
+
+                              data.set({
+                                'id': data.id.toString(),
                                 'email': user!.email,
                                 'item': widget.cardData,
                                 'amount': widget.totalAmount,
-                                'gtName': 'bKash'
+                                'gtName': 'bKash',
+                                'delivery': true
                               }).then((value) async {
                                 final cart = await FirebaseFirestore.instance
                                     .collection("users")
@@ -180,14 +199,19 @@ class _PaymentGetewayScreenState extends State<PaymentGetewayScreen> {
                             );
                           } else if (status == 'paymentClose') {
                             if (data == 'closedWindow') {
+                              final data = FirebaseFirestore.instance
+                                  .collection("orders")
+                                  .doc(user!.email)
+                                  .collection("order")
+                                  .doc();
 
-                               FirebaseFirestore.instance
-                                  .collection("orders").doc(user!.email).set(
-                                  {
+                              data.set({
+                                'id': data.id.toString(),
                                 'email': user!.email,
                                 'item': widget.cardData,
                                 'amount': widget.totalAmount,
-                                'gtName': 'bKash'
+                                'gtName': 'bKash',
+                                'delivery': true
                               }).then((value) async {
                                 final cart = await FirebaseFirestore.instance
                                     .collection("users")
@@ -215,10 +239,10 @@ class _PaymentGetewayScreenState extends State<PaymentGetewayScreen> {
                             }
                           }
                           // back to screen to pop()
-                         Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CartScreen() ));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CartScreen()));
                         },
                       )));
             },
@@ -237,7 +261,42 @@ class _PaymentGetewayScreenState extends State<PaymentGetewayScreen> {
             ),
           ),
           InkWell(
-            onTap: () async {},
+            onTap: () async {
+              final data = FirebaseFirestore.instance
+                  .collection("orders")
+                  .doc(user!.email)
+                  .collection("order")
+                  .doc();
+
+              await data.set({
+                'id': data.id.toString(),
+                'email': user!.email,
+                'item': widget.cardData,
+                'amount': widget.totalAmount,
+                'gtName': 'COD',
+                'delivery': false
+              }).then((value) async {
+                final cart = await FirebaseFirestore.instance
+                    .collection("users")
+                    .doc(user!.email)
+                    .collection('cart')
+                    .get();
+
+                for (var item in cart.docs) {
+                  await item.reference.delete();
+                }
+              });
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SuccessPaymentScreen()));
+              showTopSnackBar(
+                Overlay.of(context),
+                CustomSnackBar.success(
+                  message: "Payment Successfully Done",
+                ),
+              );
+            },
             child: Card(
               child: ListTile(
                 title: Text(

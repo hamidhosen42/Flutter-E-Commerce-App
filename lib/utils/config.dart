@@ -1,7 +1,6 @@
 class AppConfig {
   static String appName = "ShopSavvy";
   // ignore_for_file: static constant_identifier_names
-
   
   static String bannerAdUnit = "ca-app-pub-3940256099942544/6300978111";
   static String interAdUnit = "ca-app-pub-3940256099942544/1033173712";

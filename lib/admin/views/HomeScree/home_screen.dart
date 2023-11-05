@@ -198,27 +198,33 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   } else {
                     return SizedBox(
                       height: 70,
-                      child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          primary: false,
-                          itemCount: data.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              margin: EdgeInsets.only(right: 15),
-                              width: 70,
-                              decoration: BoxDecoration(
-                                  color: Color(0xFFF2F2F2),
-                                  border:
-                                      Border.all(color: Color(0xFFD8D3D3)),
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Center(
-                                  child: Image.network(data[index]['icon']!)),
-                            );
-                          }),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            primary: false,
+                            itemCount: data.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                margin: EdgeInsets.only(right: 15),
+                                width: 70,
+                                decoration: BoxDecoration(
+                                    color: Color(0xFFF2F2F2),
+                                    border:
+                                        Border.all(color: Color(0xFFD8D3D3)),
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Center(
+                                    child: Image.network(data[index]['icon']!)),
+                              );
+                            }),
+                      ),
                     );
                   }
                 }),
+                SizedBox(
+                  height: 5.h,
+                ),
             Align(
               alignment: Alignment.bottomLeft,
               child: Text(
