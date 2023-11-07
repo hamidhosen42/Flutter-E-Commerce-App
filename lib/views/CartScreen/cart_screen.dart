@@ -100,7 +100,7 @@ class _CartScreenState extends State<CartScreen> {
                                     height: 60.h,
                                     width: 80.w,
                                     decoration: BoxDecoration(
-                                        color: color,
+                                        color: Colors.white,
                                         borderRadius:
                                             BorderRadius.circular(15)),
                                   ),

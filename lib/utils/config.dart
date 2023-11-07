@@ -7,6 +7,9 @@ class AppConfig {
   static String rewardAdUnit = "ca-app-pub-3940256099942544/5224354917";
 
 
+  //!---- Database Initialize ----!//
+  static const String environment = 'production'; // It only can be production or development
+
 //!---------FAQ english strings----------
   static const faqTitle1 = "Explore ShopSavvy Hidden Gems";
   static const faqTitle2 = "Immerse Yourself in ShopSavvy";

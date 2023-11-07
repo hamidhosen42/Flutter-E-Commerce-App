@@ -56,7 +56,7 @@ class _OrderScreenState extends State<OrderScreen> {
                         horizontal: 10, vertical: 5),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: AppColor.fieldBackgroundColor,
+                        color:themeManager.themeMode == ThemeMode.light? AppColor.fieldBackgroundColor:Colors.grey[900],
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Padding(
@@ -76,7 +76,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                   width: 50.w,
                                   decoration: BoxDecoration(
                                     color: Colors.white,
-                                    borderRadius: BorderRadius.circular(15),
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
                                 Column(
@@ -88,13 +88,14 @@ class _OrderScreenState extends State<OrderScreen> {
                                       style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 14.sp,
+                                        color: color
                                       ),
                                     ),
                                     Text(
                                       "\$${item['price']}",
                                       style: TextStyle(
                                         fontSize: 12.sp,
-                                        color: Colors.black.withOpacity(0.5),
+                                        color:themeManager.themeMode == ThemeMode.light? Colors.black.withOpacity(0.5):Colors.white,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -107,7 +108,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                     Text(
                                       data['gtName'],
                                       style: TextStyle(
-                                        color: Colors.black.withOpacity(0.5),
+                                    color:themeManager.themeMode == ThemeMode.light? Colors.black.withOpacity(0.5):Colors.white,
                                       ),
                                     ),
                                     Container(
@@ -124,22 +125,12 @@ class _OrderScreenState extends State<OrderScreen> {
                                           horizontal: 5,
                                         ),
                                         child: data['delivery'] == false
-                                            ? InkWell(
-                                                onTap: () async {
-                                                  FirebaseFirestore.instance
-                                                      .collection("orders")
-                                                      .doc(user!.email)
-                                                      .collection("order")
-                                                      .doc(data['id'])
-                                                      .update({"delivery": true});
-                                                },
-                                                child: Text(
-                                                  "Pending",
-                                                  style: TextStyle(
-                                                    color: Colors.red,
-                                                  ),
-                                                ),
-                                              )
+                                            ? Text(
+                                              "Pending",
+                                              style: TextStyle(
+                                                color: Colors.red,
+                                              ),
+                                            )
                                             : Text(
                                                 "Success",
                                                 style: TextStyle(

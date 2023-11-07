@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_local_variable
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/utils/colors.dart';
@@ -8,6 +8,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
+
+import '../../main.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   final QueryDocumentSnapshot<Map<String, dynamic>> product;
@@ -39,7 +41,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
+     final color =themeManager.themeMode == ThemeMode.light ? Colors.black : Colors.white;
     return Scaffold(
+       backgroundColor: themeManager.themeMode == ThemeMode.light
+                  ? Colors.white
+                  : Colors.black,
       extendBodyBehindAppBar: true,
       appBar:
           customAppBar(context: context, backgroundColor: Colors.transparent),
@@ -49,7 +55,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           children: [
             Container(
               height: size.height * 0.3,
-              color: const Color(0xFFD9D9D9),
+              color:themeManager.themeMode == ThemeMode.light? const Color(0xFFD9D9D9):Colors.black,
               child: Center(
                 child: Image.network(widget.product['image']!),
               ),
@@ -61,7 +67,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 children: [
                   Text(
                     widget.product['name']!,
-                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17,color: color),
                   ),
                   SizedBox(
                     height: 10,
@@ -104,20 +110,20 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       Text(
                         "\$${widget.product['price']!}",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
+                            fontWeight: FontWeight.bold, fontSize: 20,color: color),
                       ),
                       widget.product['stock'] == true
                           ? Text(
                               "Available in stock",
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
-                                  color: Colors.black.withOpacity(0.5)),
+                                  color:themeManager.themeMode == ThemeMode.light? Colors.black.withOpacity(0.5):Colors.white),
                             )
                           : Text(
                               "Stock Out",
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
-                                  color: Colors.black.withOpacity(0.5)),
+                                  color:themeManager.themeMode == ThemeMode.light? Colors.black.withOpacity(0.5):Colors.white),
                             ),
                     ],
                   ),
@@ -126,7 +132,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   ),
                   Text(
                     "About",
-                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20,color: color),
                   ),
                   SizedBox(
                     height: 10,
@@ -134,7 +140,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   Text(
                     widget.product['description']!,
                     textAlign: TextAlign.justify,
-                    style: TextStyle(color: Colors.black.withOpacity(0.5)),
+                    style: TextStyle( color:themeManager.themeMode == ThemeMode.light? Colors.black.withOpacity(0.5):Colors.white),
                   ),
                   SizedBox(
                     height: 20,

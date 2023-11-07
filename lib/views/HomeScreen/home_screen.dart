@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     MaterialPageRoute(builder: (_) => LoginScreen()),
                     (route) => false);
               },
-              icon: Icon(Icons.logout),
+              icon: Icon(Icons.logout,color: color,),
             )
           ]),
       body: firebaseSliders.isEmpty
@@ -218,7 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         margin: EdgeInsets.only(right: 15),
                                         width: 70,
                                         decoration: BoxDecoration(
-                                            color: themeManager.themeMode == ThemeMode.light ?Color(0xFFF2F2F2):Colors.grey[900],
+                                            color: themeManager.themeMode == ThemeMode.light ?Color(0xFFF2F2F2):Colors.grey[500],
                                             border: Border.all(
                                                 color: Color(0xFFD8D3D3)
                                                 
