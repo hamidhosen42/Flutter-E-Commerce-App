@@ -1,5 +1,5 @@
-name: e_commerce
-description: A new Flutter project.
+name: buy_njoy
+description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.1.0 <4.0.0'
+  sdk: '>=3.2.6 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -35,23 +35,24 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  carousel_slider: ^4.2.1
-  firebase_core: ^2.20.0
-  firebase_auth: ^4.12.0
-  cloud_firestore: ^4.12.1
-  cached_network_image: ^3.3.0
-  top_snackbar_flutter: ^3.1.0
-  flutter_screenutil: ^5.9.0
-  lottie: ^2.7.0
-  dropdown_button2: ^2.3.9
-  velocity_x: ^4.1.1
-  flutter_stripe: any
-  http: any
-  flutter_bkash: 
-  flutter_paystack: 
-  image_picker: ^1.0.4
-  firebase_storage: ^11.4.1
-  toggle_switch: ^2.1.0
+  carousel_slider:
+  firebase_core:
+  firebase_auth:
+  cloud_firestore:
+  cached_network_image:
+  top_snackbar_flutter:
+  flutter_screenutil:
+  lottie:
+  dropdown_button2:
+  velocity_x:
+  flutter_stripe:
+  http:
+  flutter_bkash:
+  flutter_paystack:
+  image_picker:
+  firebase_storage:
+  toggle_switch:
+  get:
 
 dev_dependencies:
   flutter_test:
@@ -63,8 +64,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
-  flutter_launcher_icons: "^0.11.0"
-    
+  flutter_launcher_icons: ^0.11.0
+
 flutter_icons:
   android: "launcher_icon"
   ios: false
@@ -88,7 +89,6 @@ flutter:
     - assets/avatar.png
     - assets/images/
     - assets/json/
-  #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
